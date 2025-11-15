@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->string('name');
-            $table->integer('numberOfEmployees')->nullable();
+            $table->integer('numberOfEmployees');
             $table->string('logo')->nullable();
             $table->string('description')->nullable();
             $table->timestamps();
