@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('shop_id')->constrained('shops')->cascadeOnDelete();
             $table->string('name');
             $table->integer('QTY');
+            $table->integer('Price');
             $table->string('image')->nullable();
             $table->string('description')->nullable();
             $table->boolean('isActive')->default(true);
