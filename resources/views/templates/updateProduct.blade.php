@@ -5,22 +5,23 @@
 @section('content')
     <div>
         <h2>Update Product</h2>
-        <form>
+        <form method="post" action="{{ route('updateproduct') }}">
+            @csrf
             <div>
                 <label for="name">Product Name</label>
-                <input type="text" id="name" name="name" readonly>
+                <input type="text" id="name" name="name">
             </div>
             <div>
                 <label for="QTY">QTY</label>
-                <input type="number" id="QTY" name="QTY" readonly>
+                <input type="number" id="QTY" name="QTY" >
             </div>
             <div>
                 <label for="price">Price</label>
-                <input type="number" id="price" name="price" readonly>
+                <input type="number" id="price" name="price">
             </div>
             <div>
                 <label for="description">Description</label>
-                <input type="text" id="description" name="description" readonly>
+                <input type="text" id="description" name="description" >
             </div>
             <div>
                 <label for="category">Category</label>
@@ -29,8 +30,7 @@
                 </select>
             </div>
             <div>
-                <button type="button" disabled>Update Product</button>
-                <button type="button" disabled>Cancel</button>
+                <button type="submit" >Update Product</button>
             </div>
         </form>
     </div>

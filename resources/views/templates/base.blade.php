@@ -10,10 +10,7 @@
         <nav>
             <h1>PMS</h1>
             <ul>
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Products</a></li>
-                <li><a href="#">Stores</a></li>
-                <img src="" alt="logo">
+                <li><a href="#"><img src="" alt="logo"></a></li>     
             </ul>
         </nav>
     </header>

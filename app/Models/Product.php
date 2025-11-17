@@ -10,6 +10,7 @@ class Product extends Model
         'shop_id',
         'name',
         'QTY',
+        'price',
         'image',
         'isActive',
     ];

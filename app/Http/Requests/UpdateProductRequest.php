@@ -17,6 +17,7 @@ class UpdateProductRequest extends FormRequest
         return [
             'name'=>'sometimes|string|max:255',
             'QTY'=>'sometimes|integer',
+            'price'=>'sometimes|integer',
             'image'=>'sometimes|mimes:png,jpg,jpeg|max:2048',
             'description'=>'sometimes|string',
         ];

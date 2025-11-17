@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Shop;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+
 class UserController extends Controller
 {
     public function register(Request $request)
@@ -34,15 +38,23 @@ class UserController extends Controller
 
         ]);
 
-        if (!Auth::attempt(['email' => $request->email, 'password' => $request->password])) 
-        {
-            return response()->json(['message' => 'wrong password or email'], 401);
-        }
-        $user = Auth::user();
-
+        if(!Auth::attempt($request->only('email','password')))
+            return redirect('loginpage')->with('error','Wrong password or email');
+        
+        $user = User::where('email',$request->email)->firstOrFail();
         $token = $user->createToken('auth_Token')->plainTextToken;
 
-        return response()->json(['token' => $token, 'userData' => $user], 200);
+        if(isset($token))
+        {
+            if(Shop::where('user_id',$user->id)->exists())
+            {
+                return redirect('shopdashboard');
+            }
+        }
+    
+        return redirect('makeshoppage');
+        // return response()->json(['message'=>'user loged in','user'=>$user,'Token'=>$token],201);
+        
     }
 
     public function logout(Request $request)
@@ -50,6 +62,19 @@ class UserController extends Controller
         $request->user()->currentAccessToken()->delete();
 
         return response()->json(['message' => 'User logged out successfully'], 200);
+    }
+
+    public function mail(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|max:255',
+            'message' => 'required|string|max:255',
+
+        ]);
+
+        // Mail::to($request->email)->send(new in($user));
+        return redirect('index');
     }
 
 }

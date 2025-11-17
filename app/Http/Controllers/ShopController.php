@@ -25,7 +25,8 @@ class ShopController extends Controller
             $validatedData['logo'] = $request->file('logo')->store('logo','public');
 
         $shop = Shop::create($validatedData);
-        return response()->json(['message'=>'shop crated','data'=>$shop],201);
+        return redirect('shopdashboard');
+        // return response()->json(['message'=>'shop crated','data'=>$shop],201);
 
     }
 
