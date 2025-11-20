@@ -3,36 +3,42 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class ContactEmail extends Mailable
+class ActiveProductsReportEmail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $data;
-
-    public function __construct(array $data)
+    public $products;
+    public function __construct($products)
     {
-        $this->data = $data;   // store the validated array
+        $this->products = $products;
     }
 
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: $this->data['subject'] ?? 'Contact Email',
+            subject: 'Active Products Report Email',
         );
     }
+
 
     public function content(): Content
     {
         return new Content(
-            view: 'email.Contact',
+            view: 'email.ProductsReport',
         );
     }
 
+    /**
+     * Get the attachments for the message.
+     *
+     * @return array<int, \Illuminate\Mail\Mailables\Attachment>
+     */
     public function attachments(): array
     {
         return [];

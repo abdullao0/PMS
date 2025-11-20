@@ -3,14 +3,17 @@
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\UserController;
+use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/',function(){
     return view('templates.index');
 });
+Route::get('/index',function(){
+    return view('templates.index');
+});
 Route::post('/Contact',[UserController::class,'Contact'])->name('Contact');
-
 
 Route::get('/registerpage',function(){
     return view('templates.register');
@@ -24,8 +27,12 @@ Route::get('/loginpage',function(){
     Route::post('login',[UserController::class,'login'])->name('login');
 
 
-Route::post('logout',[UserController::class,'logout']);
+Route::post('logout',[UserController::class,'logout'])->middleware('auth:sanctum')->name('logout');
 
+Route::middleware('auth:sanctum')->group(function () {
+
+Route::get('/activeproducts',[UserController::class,'activeproducts'])->name('activeproducts');
+Route::get('/unactiveproducts',[UserController::class,'unactiveproducts'])->name('unactiveproducts');
 
 
 Route::get('/makeshoppage',function(){
@@ -35,7 +42,11 @@ Route::get('/makeshoppage',function(){
 
 
 Route::get('/shopdashboard',function(){
-    $products = Auth::user()->shop->products ?? collect();
+    $products = Auth::user()
+    ->shop
+    ->products()
+    ->where('isActive', true)
+    ->get() ?? collect();
     $shop = Auth::user()->shop;
 
     return view('templates.shopDashboard',compact('products','shop'));
@@ -45,8 +56,8 @@ Route::get('/shopdashboard',function(){
 
 Route::get('/updateshoppage/{shop_id}',function(){
     $id = Auth::user()->shop->id;
-    return view('templates.updateShop',compact('id'));
-})->name('updateshoppage');
+    return view('templates.shopInfo',compact('id'));
+})->name('shopInfoPage');
     Route::post('updateshop/{shop_id}',[ShopController::class,'update'])->name('updateshop');
 
 
@@ -59,5 +70,9 @@ Route::get('/updateproductpage/{product_id}',function(){
 Route::get('/addproductpage',function(){
     return view('templates.addProduct');
 })->name('addproductpage');
+
     Route::post('addproduct',[ProductController::class,'store'])->name('addproduct');
 
+    Route::put('deactiveate/{product_id}',[ProductController::class,'deactiveate'])->name('deleteproduct');
+
+ });

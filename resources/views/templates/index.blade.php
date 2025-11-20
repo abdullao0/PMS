@@ -44,8 +44,29 @@
             <form method="post" action="{{ route('Contact') }}">
                 @csrf
                 <input type="text" placeholder="Your Name" required name="name" />
+                @error('name')
+                    <div style="color: red;">
+                        {{ $message }}
+                    </div>
+                @enderror
                 <input type="email" placeholder="Your Email" required name="email" />
+                @error('email')
+                    <div style="color: red;">
+                        {{ $message }}
+                    </div>
+                @enderror
+                <input type="text" placeholder="Your subject" required name="subject" />
+                @error('subject')
+                    <div style="color: red;">
+                        {{ $message }}
+                    </div>
+                @enderror
                 <textarea placeholder="Your Message" rows="5" required name="message"></textarea>
+                @error('message')
+                    <div style="color: red;">
+                        {{ $message }}
+                    </div>
+                @enderror
                 <button type="submit">Send Message</button>
             </form>
         </div>

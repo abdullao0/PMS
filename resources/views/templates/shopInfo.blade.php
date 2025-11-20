@@ -1,14 +1,31 @@
 @extends('templates.base')
 
-@section('title', 'Add Shop - PMS')
+@section('title', 'Shop Info - PMS')
 
 @section('content')
     <div>
-        <h2>Add New Store</h2>
-        <form method="post" action="{{ route('makeshop') }}">
+
+
+
+    <form action="{{ route('activeproducts') }}" method="get">
+        <button type="submit">
+            send report for active products
+        </button>
+    </form>
+
+    <form action="{{ route('unactiveproducts') }}" method="get">
+        <button type="submit">
+            send report for unactive products
+        </button>
+    </form>
+
+
+
+        <h2>Update Shop Information</h2>
+        <form method="post" action="{{ route('updateshop', $id) }}">
             @csrf
             <div>
-                <label for="name">Shop Name</label>
+                <label for="name">Store Name</label>
                 <input type="text" id="name" name="name">
                 @error('name')
                     <div style="color: red;">
@@ -44,9 +61,12 @@
                 @enderror
             </div>
             <div>
-                <button type="submit" >Add Shop</button>
+                <button type="submit">Update Store</button>
             </div>
+        </form>
+
+        <form action="{{ route('logout') }}" method="post">
+            <button> log out</button>
         </form>
     </div>
 @endsection
-

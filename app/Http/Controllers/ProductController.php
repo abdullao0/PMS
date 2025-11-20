@@ -23,7 +23,8 @@ class ProductController extends Controller
         $validatedData['shop_id'] = $shop_id;
 
         $product =Product::create($validatedData);
-        return response()->json([$product],201);
+        // return response()->json($product,201);
+        return redirect('shopdashboard');
     }
 
     public function index()
@@ -65,7 +66,10 @@ class ProductController extends Controller
         
         $product->update(['isActive'=>false]);
 
-        return response()->json(['softdelete done',$product], 200);
+        // return response()->json(['softdelete done',$product], 200);
+        return redirect('shopdashboard');
+
+
  
     }
 

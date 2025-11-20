@@ -2,6 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ActiveProductsReportEmail;
+use App\Mail\ContactEmail;
+use App\Mail\ProductsReportEmail;
+use App\Mail\UnactiveProductsReportEmail;
+use App\Mail\WellcomeBackEmail;
+use App\Mail\WellcomeEmail;
 use App\Models\Shop;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -27,7 +33,12 @@ class UserController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
-        return response()->json(['message' => 'user created', 'userData' => $user], 201);
+
+        Mail::to($user->email)->send(new WellcomeEmail($user));
+
+        // return response()->json(['message' => 'user created', 'userData' => $user], 201);
+        return redirect('loginpage');
+
     }
 
     public function login(Request $request)
@@ -38,43 +49,92 @@ class UserController extends Controller
 
         ]);
 
-        if(!Auth::attempt($request->only('email','password')))
-            return redirect('loginpage')->with('error','Wrong password or email');
-        
-        $user = User::where('email',$request->email)->firstOrFail();
+        if (!Auth::attempt($request->only('email', 'password')))
+            return redirect('loginpage')->with('error', 'Wrong password or email');
+
+        $user = User::where('email', $request->email)->firstOrFail();
         $token = $user->createToken('auth_Token')->plainTextToken;
 
-        if(isset($token))
-        {
-            if(Shop::where('user_id',$user->id)->exists())
-            {
+        if (isset($token)) {
+            if (Shop::where('user_id', $user->id)->exists()) {
+                Mail::to($user->email)->send(new WellcomeBackEmail($user));
                 return redirect('shopdashboard');
             }
         }
-    
+
+        Mail::to($user->email)->send(new WellcomeBackEmail($user));
         return redirect('makeshoppage');
         // return response()->json(['message'=>'user loged in','user'=>$user,'Token'=>$token],201);
-        
+
     }
 
     public function logout(Request $request)
     {
         $request->user()->currentAccessToken()->delete();
 
-        return response()->json(['message' => 'User logged out successfully'], 200);
+        // return response()->json(['message' => 'User logged out successfully'], 200);
+        return redirect('index');
+
     }
 
-    public function mail(Request $request)
-    {
-        $request->validate([
+public function Contact(Request $request)
+{
+    try {
+        $data = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|max:255',
             'message' => 'required|string|max:255',
-
+            'subject' => 'required|string|max:255',
         ]);
+        
+        Mail::to($data['email'])->send(new ContactEmail($data));
 
-        // Mail::to($request->email)->send(new in($user));
         return redirect('index');
+
+    } catch (\Throwable $th) {
+        return $th;
     }
+}
+
+public function activeproducts()
+{
+    try {
+
+        $products = Auth::user()
+        ->shop
+        ->products()
+        ->where('isActive', true)
+        ->get() ?? collect();
+
+        $email = Auth::user()->email;
+
+        Mail::to($email)->send(new ActiveProductsReportEmail($products));
+
+        return redirect('shopdashboard');
+
+    } catch (\Throwable $th) {
+        return $th;
+    }
+}
+public function unactiveproducts()
+{
+    try {
+
+        $products = Auth::user()
+        ->shop
+        ->products()
+        ->where('isActive', false)
+        ->get() ?? collect();
+
+        $email = Auth::user()->email;
+
+        Mail::to($email)->send(new UnactiveProductsReportEmail($products));
+
+        return redirect('shopdashboard');
+
+    } catch (\Throwable $th) {
+        return $th;
+    }
+}
 
 }

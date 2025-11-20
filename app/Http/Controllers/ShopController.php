@@ -66,7 +66,9 @@ class ShopController extends Controller
 
         $shop->update($validatedData);
 
-        return response()->json(['message'=>'product updated','data'=>$shop]);
+        // return response()->json(['message'=>'product updated','data'=>$shop]);
+        return redirect('shopdashboard');
+
 
     }
 

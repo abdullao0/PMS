@@ -10,18 +10,38 @@
             <div>
                 <label for="name">Product Name</label>
                 <input type="text" id="name" name="name">
+                @error('name')
+                    <div style="color: red;">
+                        {{ $message }}
+                    </div>
+                @enderror
             </div>
             <div>
                 <label for="QTY">QTY</label>
-                <input type="number" id="QTY" name="QTY" >
+                <input type="number" id="QTY" name="QTY">
+                @error('QTY')
+                    <div style="color: red;">
+                        {{ $message }}
+                    </div>
+                @enderror
             </div>
             <div>
                 <label for="price">Price</label>
                 <input type="number" id="price" name="price">
+                @error('price')
+                    <div style="color: red;">
+                        {{ $message }}
+                    </div>
+                @enderror
             </div>
             <div>
                 <label for="description">Description</label>
-                <input type="text" id="description" name="description" >
+                <input type="text" id="description" name="description">
+                @error('description')
+                    <div style="color: red;">
+                        {{ $message }}
+                    </div>
+                @enderror
             </div>
             <div>
                 <label for="category">Category</label>
@@ -30,9 +50,8 @@
                 </select>
             </div>
             <div>
-                <button type="submit" >Update Product</button>
+                <button type="submit">Update Product</button>
             </div>
         </form>
     </div>
 @endsection
-

@@ -9,7 +9,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class ProductsReportEmail extends Mailable
+class UnactiveProductsReportEmail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -22,7 +22,7 @@ class ProductsReportEmail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Products Report Email',
+            subject: 'Unactive Products Report Email',
         );
     }
 
@@ -30,7 +30,7 @@ class ProductsReportEmail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'eamil.ProductsReport',
+            view: 'email.ProductsReport',
         );
     }
 
