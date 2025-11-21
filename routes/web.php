@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\UserController;
+use App\Models\Product;
 use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -61,10 +62,13 @@ Route::get('/updateshoppage/{shop_id}',function(){
     Route::post('updateshop/{shop_id}',[ShopController::class,'update'])->name('updateshop');
 
 
-Route::get('/updateproductpage/{product_id}',function(){
-    return view('templates.updateProduct');
+Route::get('/updateproductpage/{product_id}', function ($product_id) {
+    $product = Product::findOrFail($product_id);
+    return view('templates.updateProduct', compact('product'));
 })->name('updateproductpage');
-    Route::post('updateproduct/{product_id}',[ProductController::class,'update'])->name('updateproduct');
+
+
+    Route::put('updateproduct/{product_id}',[ProductController::class,'update'])->name('updateproduct');
 
 
 Route::get('/addproductpage',function(){
