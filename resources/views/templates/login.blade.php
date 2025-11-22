@@ -172,7 +172,7 @@
             <button type="submit" class="btn-login">
                 <i class="bi bi-box-arrow-in-right"></i> Login
             </button>
-            <div class="login-footer">
+            <div class="login-footer" onclick="style.display = 'none' ">
                 <p>Don't have an account? <a href="{{ route('registerpage') }}">Register</a></p>
             </div>
         </form>

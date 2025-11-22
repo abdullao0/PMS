@@ -175,7 +175,7 @@
                     </div>
                 @enderror
             </div>
-            <button type="submit" class="btn-register">Register</button>
+            <button type="submit" class="btn-register" onclick="style.display = 'none' ">Register</button>
             <div class="register-footer">
                 <p>Already have an account? <a href="{{ route('loginpage') }}">Login</a></p>
             </div>

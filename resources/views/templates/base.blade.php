@@ -95,13 +95,20 @@
                 font-size: 1.5rem;
             }
         }
+                .navbar-brand {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white !important;
+        }
     </style>
 </head>
 <body>
     <header>
         <nav>
             <h1>
+                <a class="navbar-brand" href="{{ route('shopdashboard') }}">
                 <i class="bi bi-box-seam"></i> PMS
+                </a>
             </h1>
             <ul>
             </ul>

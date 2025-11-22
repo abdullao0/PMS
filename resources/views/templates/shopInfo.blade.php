@@ -285,6 +285,7 @@
         <p>Once you logout, you'll need to sign in again to access your dashboard.</p>
         <form action="{{ route('logout') }}" method="post">
             @csrf
+            
             <button type="submit" class="btn-logout">
                 <i class="bi bi-box-arrow-right"></i> Log Out
             </button>

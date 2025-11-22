@@ -68,18 +68,25 @@ class UserController extends Controller
 
     }
 
-    public function logout(Request $request)
-    {
-        $request->user()->currentAccessToken()->delete();
+    // public function logout(Request $request)
+    // {
+    //     $request->user()->currentAccessToken()->delete();
 
         // return response()->json(['message' => 'User logged out successfully'], 200);
-        return redirect('index');
+    //     return redirect('index');
 
+    // }
+
+        public function logout()
+    {
+        Auth::guard('web')->logout();
+
+        return redirect('index')->with('erorr','User Loged Out Successfully');
     }
 
 public function Contact(Request $request)
 {
-    try {
+
         $data = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|max:255',
@@ -91,9 +98,7 @@ public function Contact(Request $request)
 
         return redirect('index');
 
-    } catch (\Throwable $th) {
-        return $th;
-    }
+
 }
 
 public function activeproducts()

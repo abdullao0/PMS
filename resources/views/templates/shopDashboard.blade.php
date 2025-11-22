@@ -241,7 +241,7 @@
                 @forelse($products as $product)
                     <tr>
                         <td>{{ $product->name }}</td>
-                        <td>{{ $product->description ?? "NaN" }}</td>
+                        <td>{{ $product->description }}</td>
                         <td>${{ number_format($product->Price, 2) }}</td>
                         <td>{{ $product->QTY }}</td>
                         <td>

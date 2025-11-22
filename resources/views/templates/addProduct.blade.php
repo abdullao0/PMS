@@ -188,16 +188,9 @@
                         <span class="error-message">{{ $message }}</span>
                     @enderror
                 </div>
-                <div class="form-field full-width">
-                    <label for="image">Product Image</label>
-                    <input type="file" id="image" name="image" accept="image/*">
-                    @error('image')
-                        <span class="error-message">{{ $message }}</span>
-                    @enderror
-                </div>
             </div>
             <div>
-                <button type="submit" class="btn-addproduct">
+                <button type="submit" class="btn-addproduct" onclick="style.display = 'none' ">
                     <i class="bi bi-plus-circle"></i> Add Product
                 </button>
             </div>

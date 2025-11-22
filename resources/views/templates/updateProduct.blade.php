@@ -145,28 +145,28 @@
 <div class="updateproduct-container">
     <div class="updateproduct-card">
         <h2 class="updateproduct-title">Update Product</h2>
-        <form class="updateproduct-form" method="post" action="{{ route('updateproduct',$podcut) }}">
+        <form class="updateproduct-form" method="post" action="{{ route('updateproduct',$product) }}">
             @csrf
             @method('PUT')
 
             <div class="form-grid">
                 <div class="form-field">
                     <label for="name">Product Name</label>
-                    <input type="text" id="name" name="name" value="{{ old('name') }}" placeholder="Enter product name">
+                    <input type="text" id="name" name="name" value="{{ old('name',$product->name  ?? '') }}" placeholder="Enter product name">
                     @error('name')
                         <span class="error-message">{{ $message }}</span>
                     @enderror
                 </div>
                 <div class="form-field">
                     <label for="QTY">Quantity</label>
-                    <input type="number" id="QTY" name="QTY" value="{{ old('QTY') }}" placeholder="Enter quantity" min="0">
+                    <input type="number" id="QTY" name="QTY" value="{{ old('QTY',$product->QTY  ?? '') }}" placeholder="Enter quantity" min="0">
                     @error('QTY')
                         <span class="error-message">{{ $message }}</span>
                     @enderror
                 </div>
                 <div class="form-field">
                     <label for="price">Price</label>
-                    <input type="number" id="price" name="price" value="{{ old('price') }}" placeholder="Enter price" step="0.01" min="0">
+                    <input type="number" id="price" name="price" value="{{ old('price',$product->price  ?? '') }}" placeholder="Enter price" step="0.01" min="0">
                     @error('price')
                         <span class="error-message">{{ $message }}</span>
                     @enderror
@@ -180,14 +180,14 @@
                 </div>
                 <div class="form-field full-width">
                     <label for="description">Description</label>
-                    <textarea id="description" name="description" placeholder="Enter product description">{{ old('description') }}</textarea>
+                    <textarea id="description" name="description" placeholder="Enter product description">{{ old('description',$product->description  ?? '') }}</textarea>
                     @error('description')
                         <span class="error-message">{{ $message }}</span>
                     @enderror
                 </div>
             </div>
             <div>
-                <button type="submit" class="btn-updateproduct">
+                <button type="submit" class="btn-updateproduct" onclick="style.display = 'none' ">
                     <i class="bi bi-save"></i> Update Product
                 </button>
             </div>

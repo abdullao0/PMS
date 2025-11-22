@@ -175,6 +175,7 @@
 </head>
 <body>
 
+
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
         <div class="container">
@@ -279,34 +280,34 @@
                             @csrf
                             <div class="mb-3">
                                 <label for="name" class="form-label">Your Name</label>
-                                <input type="text" class="form-control" id="name" name="name" placeholder="Enter your name" required>
+                                <input type="text" class="form-control" id="name" name="name" placeholder="Enter your name" >
                                 @error('name')
                                     <div class="text-danger mt-2">{{ $message }}</div>
                                 @enderror
                             </div>
                             <div class="mb-3">
                                 <label for="email" class="form-label">Your Email</label>
-                                <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required>
+                                <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" >
                                 @error('email')
                                     <div class="text-danger mt-2">{{ $message }}</div>
                                 @enderror
                             </div>
                             <div class="mb-3">
                                 <label for="subject" class="form-label">Subject</label>
-                                <input type="text" class="form-control" id="subject" name="subject" placeholder="Enter subject" required>
+                                <input type="text" class="form-control" id="subject" name="subject" placeholder="Enter subject" >
                                 @error('subject')
                                     <div class="text-danger mt-2">{{ $message }}</div>
                                 @enderror
                             </div>
                             <div class="mb-3">
                                 <label for="message" class="form-label">Your Message</label>
-                                <textarea class="form-control" id="message" name="message" rows="5" placeholder="Write your message here..." required></textarea>
+                                <textarea class="form-control" id="message" name="message" rows="5" placeholder="Write your message here..." ></textarea>
                                 @error('message')
                                     <div class="text-danger mt-2">{{ $message }}</div>
                                 @enderror
                             </div>
                             <div class="text-center">
-                                <button style="display:none;" type="submit" class="btn btn-primary-custom">
+                                <button onclick="style.display = 'none' " type="submit" class="btn btn-primary-custom">
                                     <i class="bi bi-send"></i> Send Message
                                 </button>
                             </div>

@@ -54,7 +54,9 @@ class ProductController extends Controller
 
         $product->update($vlidatedDate);
         
-        return response()->json($product);
+        // return response()->json($product);
+        return redirect('shopdashboard');
+
         
     }
 
