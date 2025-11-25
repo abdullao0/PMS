@@ -149,6 +149,20 @@
             </div>
         @endif
 
+        @if (session('message'))
+        @php
+            $msg = session('message');
+        @endphp
+
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: '{{ $msg }}',
+                confirmButtonColor: '#10b981'
+            });
+        </script>
+    @endif
         <form class="login-form" method="post" action="{{ route('login') }}">
             @csrf
             <div class="form-field">
@@ -169,10 +183,10 @@
                     </div>
                 @enderror
             </div>
-            <button type="submit" class="btn-login">
+            <button type="submit" class="btn-login"  onclick="style.display = 'none' ">
                 <i class="bi bi-box-arrow-in-right"></i> Login
             </button>
-            <div class="login-footer" onclick="style.display = 'none' ">
+            <div class="login-footer" >
                 <p>Don't have an account? <a href="{{ route('registerpage') }}">Register</a></p>
             </div>
         </form>

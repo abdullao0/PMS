@@ -14,7 +14,6 @@ class ShopController extends Controller
 {
     public function store(StoreShopRequest $request)
     {
-        // this is to check if the user has token(loged in)
         if (!Auth::check()) {
             return response()->json(['message'=>'Please log in first'],403);
         }
@@ -67,7 +66,7 @@ class ShopController extends Controller
         $shop->update($validatedData);
 
         // return response()->json(['message'=>'product updated','data'=>$shop]);
-        return redirect('shopdashboard');
+        return redirect('shopdashboard')->with('message', 'Shop updated successfully');;
 
 
     }

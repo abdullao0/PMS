@@ -37,7 +37,7 @@ class UserController extends Controller
         Mail::to($user->email)->send(new WellcomeEmail($user));
 
         // return response()->json(['message' => 'user created', 'userData' => $user], 201);
-        return redirect('loginpage');
+        return redirect('loginpage')->with('message', 'User Registerd Successfully');;
 
     }
 
@@ -81,65 +81,6 @@ class UserController extends Controller
     {
         Auth::guard('web')->logout();
 
-        return redirect('index')->with('erorr','User Loged Out Successfully');
+        return redirect('index')->with('message', 'User Loged Out Successfully');
     }
-
-public function Contact(Request $request)
-{
-
-        $data = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|max:255',
-            'message' => 'required|string|max:255',
-            'subject' => 'required|string|max:255',
-        ]);
-        
-        Mail::to($data['email'])->send(new ContactEmail($data));
-
-        return redirect('index');
-
-
-}
-
-public function activeproducts()
-{
-    try {
-
-        $products = Auth::user()
-        ->shop
-        ->products()
-        ->where('isActive', true)
-        ->get() ?? collect();
-
-        $email = Auth::user()->email;
-
-        Mail::to($email)->send(new ActiveProductsReportEmail($products));
-
-        return redirect('shopdashboard');
-
-    } catch (\Throwable $th) {
-        return $th;
-    }
-}
-public function unactiveproducts()
-{
-    try {
-
-        $products = Auth::user()
-        ->shop
-        ->products()
-        ->where('isActive', false)
-        ->get() ?? collect();
-
-        $email = Auth::user()->email;
-
-        Mail::to($email)->send(new UnactiveProductsReportEmail($products));
-
-        return redirect('shopdashboard');
-
-    } catch (\Throwable $th) {
-        return $th;
-    }
-}
-
 }

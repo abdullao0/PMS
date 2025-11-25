@@ -16,13 +16,13 @@ class ContactEmail extends Mailable
 
     public function __construct(array $data)
     {
-        $this->data = $data;   // store the validated array
+        $this->data = $data;
     }
 
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: $this->data['subject'] ?? 'Contact Email',
+            subject: $this->data['subject']
         );
     }
 

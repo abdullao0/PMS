@@ -9,23 +9,33 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use SebastianBergmann\CodeUnit\FunctionUnit;
 
+
 class ProductController extends Controller
 {
-    
-    public function store(StoreProductRequest $request)
-    {
-        if (!Auth::check()) {
-            return response()->json(['message'=>'Please log in first'],403);
-        }
-
-        $shop_id = Auth::user()->shop->id;
-        $validatedData = $request->validated();
-        $validatedData['shop_id'] = $shop_id;
-
-        $product =Product::create($validatedData);
-        // return response()->json($product,201);
-        return redirect('shopdashboard');
+public function store(StoreProductRequest $request)
+{
+    if (!Auth::check()) {
+        return response()->json(['message' => 'Please log in first'], 403);
     }
+
+    $shop_id = Auth::user()->shop->id;
+    $validatedData = $request->validated();
+    $validatedData['shop_id'] = $shop_id;
+
+    // Create the product
+    $product = Product::create($validatedData);
+
+    // Attach categories if they exist in the request
+    if (isset($validatedData['categories'])) {
+        $product->categories()->attach($validatedData['categories']);
+    }
+
+    return redirect()->route('shopdashboard')->with('message', 'Product added successfully');
+}
+
+
+
+    
 
     public function index()
     {
@@ -45,25 +55,46 @@ class ProductController extends Controller
 
     }
 
-    public function update(UpdateProductRequest $request,$product_id)
-    {
+    // public function update(UpdateProductRequest $request,$product_id)
+    // {
 
-        $product = Product::findOrFail($product_id);
+    //     $product = Product::findOrFail($product_id);
 
-        $vlidatedDate = $request->validated();
+    //     $vlidatedDate = $request->validated();
 
-        $product->update($vlidatedDate);
+    //     $product->update($vlidatedDate);
         
-        // return response()->json($product);
-        return redirect('shopdashboard');
+    //     // return response()->json($product);
+    //     return redirect('shopdashboard');
 
         
+    // }
+
+
+
+    public function update(UpdateProductRequest $request, $product_id)
+{
+    $product = Product::findOrFail($product_id);
+    $validatedData = $request->validated();
+
+    // Update the product
+    $product->update($validatedData);
+
+    // Sync categories if they exist in the request
+    if (isset($validatedData['categories'])) {
+        $product->categories()->sync($validatedData['categories']);
+    } else {
+        // If no categories are selected, remove all categories
+        $product->categories()->detach();
     }
+    
+    return redirect()->route('shopdashboard')->with('message', 'Product updated successfully');
+}
 
 
     public function deactiveate($product_id)
     {
-        $shop_id = Auth::user()->shop_id;
+        Auth::user()->shop_id;
         $product = Product::findOrFail($product_id);
         
         $product->update(['isActive'=>false]);

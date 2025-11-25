@@ -49,9 +49,9 @@
                                     <tr>
                                         <td>{{ $index + 1 }}</td>
                                         <td>{{ $product->name }}</td>
-                                        <td>{{ $product->quantity }}</td>
+                                        <td>{{ $product->QTY }}</td>
                                         <td>${{ number_format($product->price, 2) }}</td>
-                                        <td>${{ number_format($product->quantity * $product->price, 2) }}</td>
+                                        <td>${{ number_format($product->QTY * $product->price, 2) }}</td>
                                     </tr>
                                     
                                     @empty

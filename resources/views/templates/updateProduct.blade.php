@@ -71,6 +71,11 @@
         box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
     }
 
+    .updateproduct-form input[type="file"] {
+        padding: 0.6rem;
+        cursor: pointer;
+    }
+
     .updateproduct-form select:disabled {
         background-color: #f1f5f9;
         cursor: not-allowed;
@@ -112,15 +117,38 @@
         transform: translateY(0);
     }
 
-    /* Two Column Grid for better layout */
+    /* Three Column Grid for Name, Price, and Quantity in one row */
+    .form-grid-three {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr;
+        gap: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+
     .form-grid {
         display: grid;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1fr;
         gap: 1.5rem;
     }
 
-    .form-field.full-width {
-        grid-column: 1 / -1;
+    .checkbox-group {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        padding: 0.5rem 0;
+    }
+
+    .checkbox-label {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        cursor: pointer;
+        font-weight: 400;
+    }
+
+    .checkbox-label input[type="checkbox"] {
+        width: auto;
+        cursor: pointer;
     }
 
     @media (max-width: 768px) {
@@ -136,7 +164,7 @@
             font-size: 1.75rem;
         }
 
-        .form-grid {
+        .form-grid-three {
             grid-template-columns: 1fr;
         }
     }
@@ -145,49 +173,66 @@
 <div class="updateproduct-container">
     <div class="updateproduct-card">
         <h2 class="updateproduct-title">Update Product</h2>
-        <form class="updateproduct-form" method="post" action="{{ route('updateproduct',$product) }}">
+        <form class="updateproduct-form" method="post" action="{{ route('updateproduct',$product) }}" enctype="multipart/form-data">
             @csrf
             @method('PUT')
-
-            <div class="form-grid">
+            
+            <!-- Name, Price, and Quantity in one row -->
+            <div class="form-grid-three">
                 <div class="form-field">
                     <label for="name">Product Name</label>
-                    <input type="text" id="name" name="name" value="{{ old('name',$product->name  ?? '') }}" placeholder="Enter product name">
+                    <input type="text" id="name" name="name" value="{{ old('name', $product->name ?? '') }}" placeholder="Enter product name">
                     @error('name')
                         <span class="error-message">{{ $message }}</span>
                     @enderror
                 </div>
                 <div class="form-field">
-                    <label for="QTY">Quantity</label>
-                    <input type="number" id="QTY" name="QTY" value="{{ old('QTY',$product->QTY  ?? '') }}" placeholder="Enter quantity" min="0">
-                    @error('QTY')
-                        <span class="error-message">{{ $message }}</span>
-                    @enderror
-                </div>
-                <div class="form-field">
                     <label for="price">Price</label>
-                    <input type="number" id="price" name="price" value="{{ old('price',$product->price  ?? '') }}" placeholder="Enter price" step="0.01" min="0">
+                    <input type="number" id="price" name="price" value="{{ old('Price', $product->Price ?? '') }}" placeholder="Enter price" step="0.01" min="0">
                     @error('price')
                         <span class="error-message">{{ $message }}</span>
                     @enderror
                 </div>
                 <div class="form-field">
-                    <label for="category">Category</label>
-                    <select id="category" name="category" disabled>
-                        <option value="">Select Category</option>
-                    </select>
-                    <span class="error-message" style="font-style: italic; color: #64748b;">Coming soon</span>
+                    <label for="QTY">Quantity</label>
+                    <input type="number" id="QTY" name="QTY" value="{{ old('QTY', $product->QTY ?? '') }}" placeholder="Enter quantity" min="0">
+                    @error('QTY')
+                        <span class="error-message">{{ $message }}</span>
+                    @enderror
                 </div>
-                <div class="form-field full-width">
+            </div>
+
+            <!-- Categories and Description in separate rows -->
+            <div class="form-grid">
+                <div class="form-field">
+                    <label>Categories</label>
+                    <div class="checkbox-group">
+                        @php
+                            $productCategories = $product->categories->pluck('id')->toArray();
+                            $oldCategories = old('category', $productCategories);
+                        @endphp
+                        @foreach(\App\Models\Category::all() as $category)
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="categories[]" value="{{ $category->id }}" {{ in_array($category->id, $oldCategories) ? 'checked' : '' }}>
+                                <span>{{ $category->name }}</span>
+                            </label>
+                        @endforeach
+                    </div>
+                    @error('category')
+                        <span class="error-message">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div class="form-field">
                     <label for="description">Description</label>
-                    <textarea id="description" name="description" placeholder="Enter product description">{{ old('description',$product->description  ?? '') }}</textarea>
+                    <textarea id="description" name="description" placeholder="Enter product description">{{ old('description', $product->description ?? '') }}</textarea>
                     @error('description')
                         <span class="error-message">{{ $message }}</span>
                     @enderror
                 </div>
             </div>
+
             <div>
-                <button type="submit" class="btn-updateproduct" onclick="style.display = 'none' ">
+                <button type="submit" class="btn-updateproduct" onclick="style.display = 'none'">
                     <i class="bi bi-save"></i> Update Product
                 </button>
             </div>

@@ -127,7 +127,7 @@
 
 <div class="makeshop-container">
     <div class="makeshop-card">
-        <h2 class="makeshop-title">Add New Store</h2>
+        <h2 class="makeshop-title">Make Your Shop</h2>
         <form class="makeshop-form" method="post" action="{{ route('makeshop') }}" enctype="multipart/form-data">
             @csrf
             <div class="form-field">

@@ -15,11 +15,13 @@ class StoreProductRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'=>'required|string|max:255',
-            'QTY'=>'required|integer',
-            'price'=>'required|integer',
-            'image'=>'nullable|mimes:png,jpg,jpeg|max:2048',
-            'description'=>'nullable|string',
+            'name' => 'required|string|max:255',
+            'QTY' => 'required|integer|min:0',
+            'price' => 'required|numeric|min:0',
+            'image' => 'nullable|mimes:png,jpg,jpeg|max:2048',
+            'description' => 'nullable|string',
+            'categories' => 'nullable|array',
+            'categories.*' => 'exists:categories,id'
         ];
     }
 }

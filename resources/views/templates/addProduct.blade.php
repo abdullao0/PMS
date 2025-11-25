@@ -1,8 +1,8 @@
 @extends('templates.base')
 
-@section('title', 'Add Product - PMS')
+@section('title', 'Add Product - PMS') 
 
-@section('content')
+@push('style')
 <style>
     .addproduct-container {
         max-width: 800px;
@@ -117,15 +117,38 @@
         transform: translateY(0);
     }
 
-    /* Two Column Grid for better layout */
+    /* Three Column Grid for Name, Price, and Quantity in one row */
+    .form-grid-three {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr;
+        gap: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+
     .form-grid {
         display: grid;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1fr;
         gap: 1.5rem;
     }
 
-    .form-field.full-width {
-        grid-column: 1 / -1;
+    .checkbox-group {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        padding: 0.5rem 0;
+    }
+
+    .checkbox-label {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        cursor: pointer;
+        font-weight: 400;
+    }
+
+    .checkbox-label input[type="checkbox"] {
+        width: auto;
+        cursor: pointer;
     }
 
     @media (max-width: 768px) {
@@ -141,29 +164,42 @@
             font-size: 1.75rem;
         }
 
-        .form-grid {
+        .form-grid-three {
             grid-template-columns: 1fr;
         }
     }
 </style>
 
+@endpush
+
+@section('content')
+
+    @if (session('message'))
+        @php
+            $msg = session('message');
+        @endphp
+
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: '{{ $msg }}',
+                confirmButtonColor: '#10b981'
+            });
+        </script>
+    @endif
 <div class="addproduct-container">
     <div class="addproduct-card">
         <h2 class="addproduct-title">Add New Product</h2>
         <form class="addproduct-form" method="post" action="{{ route('addproduct') }}" enctype="multipart/form-data">
             @csrf
-            <div class="form-grid">
+            
+            <!-- Name, Price, and Quantity in one row -->
+            <div class="form-grid-three">
                 <div class="form-field">
                     <label for="name">Product Name</label>
                     <input type="text" id="name" name="name" value="{{ old('name') }}" placeholder="Enter product name">
                     @error('name')
-                        <span class="error-message">{{ $message }}</span>
-                    @enderror
-                </div>
-                <div class="form-field">
-                    <label for="QTY">Quantity</label>
-                    <input type="number" id="QTY" name="QTY" value="{{ old('QTY') }}" placeholder="Enter quantity" min="0">
-                    @error('QTY')
                         <span class="error-message">{{ $message }}</span>
                     @enderror
                 </div>
@@ -175,13 +211,30 @@
                     @enderror
                 </div>
                 <div class="form-field">
-                    <label for="category">Category</label>
-                    <select id="category" name="category" disabled>
-                        <option value="">Select Category</option>
-                    </select>
-                    <span class="error-message" style="font-style: italic; color: #64748b;">Coming soon</span>
+                    <label for="QTY">Quantity</label>
+                    <input type="number" id="QTY" name="QTY" value="{{ old('QTY') }}" placeholder="Enter quantity" min="0">
+                    @error('QTY')
+                        <span class="error-message">{{ $message }}</span>
+                    @enderror
                 </div>
-                <div class="form-field full-width">
+            </div>
+
+            <div class="form-grid">
+                <div class="form-field">
+                    <label>Categories</label>
+                    <div class="checkbox-group">
+                        @foreach(\App\Models\Category::all() as $category)
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="categories[]" value="{{ $category->id }}" {{ in_array($category->id, old('category', [])) ? 'checked' : '' }}>
+                                <span>{{ $category->name }}</span>
+                            </label>
+                        @endforeach
+                    </div>
+                    @error('category')
+                        <span class="error-message">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div class="form-field">
                     <label for="description">Description</label>
                     <textarea id="description" name="description" placeholder="Enter product description">{{ old('description') }}</textarea>
                     @error('description')
@@ -189,8 +242,9 @@
                     @enderror
                 </div>
             </div>
+
             <div>
-                <button type="submit" class="btn-addproduct" onclick="style.display = 'none' ">
+                <button type="submit" class="btn-addproduct" onclick="style.display = 'none'">
                     <i class="bi bi-plus-circle"></i> Add Product
                 </button>
             </div>

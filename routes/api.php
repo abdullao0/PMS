@@ -23,7 +23,6 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::put('/shop/update/{shop_id}',[ShopController::class,'update']);
     Route::delete('/shop/destroy/{shop_id}',[ShopController::class,'destroy']);
 
-    
 
     Route::post('/product/store',[ProductController::class,'store']);
     Route::get('/product/index',[ProductController::class,'index'])->middleware('CheckRole');
