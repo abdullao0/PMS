@@ -13,10 +13,12 @@ class Shop extends Model
         'logo',
         'description'
     ];
-
+    protected $primaryKey = 'id';
+    public $incrementing = false;
+    protected $keyType = 'int';
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'id', 'id');
     }
 
     
@@ -24,6 +26,11 @@ class Shop extends Model
     {
         return $this->hasMany(Product::class);
     }
+
+
+
+
+
 
     
 }

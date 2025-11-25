@@ -28,7 +28,7 @@ class MailController extends Controller
 
             Mail::to($email)->send(new ActiveProductsReportEmail($products));
 
-            return redirect('shopdashboard');
+            return redirect('shopdashboard')->with('message', 'Active Products Report Sent successfully');
 
         } catch (\Throwable $th) {
             return $th;
@@ -48,7 +48,7 @@ class MailController extends Controller
 
             Mail::to($email)->send(new UnactiveProductsReportEmail($products));
 
-            return redirect('shopdashboard');
+            return redirect('shopdashboard')->with('message', 'Unactive Products Report Sent successfully');
 
         } catch (\Throwable $th) {
             return $th;

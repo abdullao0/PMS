@@ -12,10 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('shops', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
-            $table->string('name');
-            $table->integer('numberOfEmployees');
+            $table->unsignedBigInteger('id')->primary();
+            $table->string('name')->nullable();
+            $table->integer('numberOfEmployees')->nullable();
             $table->string('logo')->nullable();
             $table->string('description')->nullable();
             $table->timestamps();

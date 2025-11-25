@@ -51,34 +51,29 @@ class ShopController extends Controller
 
     }
 
-    public function update(UpdateProductRequest $request,$shop_id)
-    {
-        $user_id = Auth::user()->id;
-        if ($user_id != $shop_id)
-        {
-            return response()->json(['message' => 'Unauthraized User'], 403);
-        }
+public function update(UpdateProductRequest $request)
+{
+    $user = Auth::user();
+    $shop = $user->shop;
 
-        $shop = Shop::where('id',$shop_id)->firstOrFail();
-
-        $validatedData = $request->validated();
-
-        $shop->update($validatedData);
-
-        // return response()->json(['message'=>'product updated','data'=>$shop]);
-        return redirect('shopdashboard')->with('message', 'Shop updated successfully');;
-
-
+    if (!$shop) {
+        return redirect()->back()->with('error', 'Shop not found.');
     }
+
+    $validatedData = $request->validated();
+
+    $shop->update($validatedData);
+
+    return redirect()->route('shopdashboard')->with('message', 'Shop updated successfully');
+}
+
 
     public function destroy($shop_id)
     {
         $shop = Shop::findOrFail($shop_id);
-        $user = User::findOrFail($shop_id);
         $shop->delete();
-        $user->delete();
         return response()->json([
-            'message'=>'shop and user deleted successfully'
+            'message'=>'shop deleted successfully'
         ],200);
     }
     

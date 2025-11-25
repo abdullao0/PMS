@@ -60,7 +60,7 @@ Route::middleware('auth:sanctum')->group(function () {
         $id = Auth::user()->shop->id;
         return view('templates.shopInfo',compact('id'));
     })->name('shopInfoPage');
-        Route::post('updateshop/{shop_id}',[ShopController::class,'update'])->name('updateshop');
+        Route::post('updateshop',[ShopController::class,'update'])->name('updateshop');
 
 
     Route::get('/updateproductpage/{product_id}', function ($product_id) {

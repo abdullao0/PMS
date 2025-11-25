@@ -291,13 +291,6 @@ function logoutt() {
                             <span class="error-message">{{ $message }}</span>
                         @enderror
                     </div>
-                    <div class="form-field full-width">
-                        <label for="logo">Shop Logo</label>
-                        <input type="file" id="logo" name="logo" accept="image/*">
-                        @error('logo')
-                            <span class="error-message">{{ $message }}</span>
-                        @enderror
-                    </div>
                 </div>
                 <div>
                     <button type="submit" class="btn-update">

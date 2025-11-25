@@ -34,10 +34,17 @@ class UserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
+        $shop = new Shop(['id' => $user->id, 'name'=>$user->name ]);
+
+        // this is the conction of shop and the user 
+        $user->shop()->save($shop);
+
+
         Mail::to($user->email)->send(new WellcomeEmail($user));
 
         // return response()->json(['message' => 'user created', 'userData' => $user], 201);
-        return redirect('loginpage')->with('message', 'User Registerd Successfully');;
+        return redirect('loginpage')->with('message', 'User Registerd Successfully');
+        ;
 
     }
 
@@ -55,15 +62,9 @@ class UserController extends Controller
         $user = User::where('email', $request->email)->firstOrFail();
         $token = $user->createToken('auth_Token')->plainTextToken;
 
-        if (isset($token)) {
-            if (Shop::where('user_id', $user->id)->exists()) {
-                Mail::to($user->email)->send(new WellcomeBackEmail($user));
-                return redirect('shopdashboard');
-            }
-        }
-
         Mail::to($user->email)->send(new WellcomeBackEmail($user));
-        return redirect('makeshoppage');
+
+        return redirect('shopdashboard');
         // return response()->json(['message'=>'user loged in','user'=>$user,'Token'=>$token],201);
 
     }
@@ -72,12 +73,12 @@ class UserController extends Controller
     // {
     //     $request->user()->currentAccessToken()->delete();
 
-        // return response()->json(['message' => 'User logged out successfully'], 200);
+    // return response()->json(['message' => 'User logged out successfully'], 200);
     //     return redirect('index');
 
     // }
 
-        public function logout()
+    public function logout()
     {
         Auth::guard('web')->logout();
 

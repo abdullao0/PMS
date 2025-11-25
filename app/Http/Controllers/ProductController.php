@@ -43,7 +43,6 @@ public function store(StoreProductRequest $request)
         $products = Product::where('shop_id',$shop_id)->get();
 
         return response()->json([$products]);
-
     }
 
     public function show($product_id)
@@ -101,9 +100,6 @@ public function store(StoreProductRequest $request)
 
         // return response()->json(['softdelete done',$product], 200);
         return redirect('shopdashboard');
-
-
- 
     }
 
 
