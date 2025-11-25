@@ -3,6 +3,7 @@
 @section('title', 'Login - PMS')
 
 @section('content')
+@push('style')
 <style>
     .login-wrapper {
         min-height: 100vh;
@@ -138,6 +139,8 @@
         }
     }
 </style>
+@endpush
+
 
 <div class="login-wrapper">
     <div class="login-card">

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -66,13 +67,14 @@
         }
 
         /* Main Content */
-        body > div {
+        body>div {
             flex: 1;
             width: 100%;
         }
 
-        body > div > h1 {
-            display: none; /* Hide the duplicate title */
+        body>div>h1 {
+            display: none;
+            /* Hide the duplicate title */
         }
 
         /* Footer Styles */
@@ -99,7 +101,8 @@
                 font-size: 1.5rem;
             }
         }
-                .navbar-brand {
+
+        .navbar-brand {
             font-size: 1.5rem;
             font-weight: bold;
             color: white !important;
@@ -107,17 +110,25 @@
     </style>
 
     <!-- Custom CSS  -->
-     @stack('style')
+    @stack('style')
 
 
 </head>
+
 <body>
     <header>
         <nav>
             <h1>
-                <a class="navbar-brand" href="{{ route('shopdashboard') }}">
-                <i class="bi bi-box-seam"></i> PMS
-                </a>
+                @if (!Auth::check())
+                    <a class="navbar-brand" href="/">
+                        <i class="bi bi-box-seam"></i> PMS
+                    </a>
+                @else
+                    <a class="navbar-brand" href="{{ route('shopdashboard') }}">
+                        <i class="bi bi-box-seam"></i> PMS
+                    </a>
+                @endif
+
             </h1>
             <ul>
             </ul>
@@ -136,4 +147,5 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
+
 </html>

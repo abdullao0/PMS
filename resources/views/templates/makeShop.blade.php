@@ -3,6 +3,7 @@
 @section('title', 'Add Shop - PMS')
 
 @section('content')
+@push('style')
 <style>
     .makeshop-container {
         max-width: 700px;
@@ -124,6 +125,8 @@
         }
     }
 </style>
+@endpush
+
 
 <div class="makeshop-container">
     <div class="makeshop-card">

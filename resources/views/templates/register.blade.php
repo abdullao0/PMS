@@ -3,6 +3,7 @@
 @section('title', 'Register - PMS')
 
 @section('content')
+@push('style')
 <style>
     .register-wrapper {
         min-height: 100vh;
@@ -124,6 +125,8 @@
         }
     }
 </style>
+@endpush
+
 
 <div class="register-wrapper">
     <div class="register-card">

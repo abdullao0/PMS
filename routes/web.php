@@ -15,7 +15,7 @@ Route::get('/',function(){
 });
 Route::get('/index',function(){
     return view('templates.index');
-});
+})->name('index');
 Route::post('/Contact',[MailController::class,'Contact'])->name('Contact');
 
 Route::get('/registerpage',function(){
@@ -27,7 +27,7 @@ Route::get('/registerpage',function(){
 Route::get('/loginpage',function(){
     return view('templates.login');
 })->name('loginpage');
-    Route::post('login',[UserController::class,'login'])->name('login');
+    Route::post('loginpage',[UserController::class,'login'])->name('login');
 
 
 Route::post('logout',[UserController::class,'logout'])->middleware('auth:sanctum')->name('logout');

@@ -225,7 +225,7 @@
     <!-- Hero Section -->
     <section class="hero">
         <div class="container">
-            <h1><i class="bi bi-rocket-takeoff"></i> Product Management System</h1>
+            <h1><i class="bi bi-box-seam"></i> Product Management System</h1>
             <p class="lead">The first product management system designed for beginners. Simple, powerful, and completely
                 free!</p>
             <a href="{{ route('registerpage') }}" class="btn btn-light btn-lg btn-primary-custom">Get Started Now</a>
@@ -301,12 +301,12 @@
             <div class="row justify-content-center">
                 <div class="col-lg-8">
                     <div class="contact-form">
-                        <form method="post" action="{{ route('Contact') }}">
+                        <form method="post" action="{{ route('Contact') }}" novalidate>
                             @csrf
                             <div class="mb-3">
                                 <label for="name" class="form-label">Your Name</label>
                                 <input type="text" class="form-control" id="name" name="name"
-                                    placeholder="Enter your name">
+                                    placeholder="Enter your name" value="{{ old('name') }}">
                                 @error('name')
                                     <div class="text-danger mt-2">{{ $message }}</div>
                                 @enderror
@@ -314,7 +314,7 @@
                             <div class="mb-3">
                                 <label for="email" class="form-label">Your Email</label>
                                 <input type="email" class="form-control" id="email" name="email"
-                                    placeholder="Enter your email">
+                                    placeholder="Enter your email" value="{{ old('email') }}">
                                 @error('email')
                                     <div class="text-danger mt-2">{{ $message }}</div>
                                 @enderror
@@ -322,7 +322,7 @@
                             <div class="mb-3">
                                 <label for="subject" class="form-label">Subject</label>
                                 <input type="text" class="form-control" id="subject" name="subject"
-                                    placeholder="Enter subject">
+                                    placeholder="Enter subject" value="{{ old('subject') }}">
                                 @error('subject')
                                     <div class="text-danger mt-2">{{ $message }}</div>
                                 @enderror
@@ -330,7 +330,7 @@
                             <div class="mb-3">
                                 <label for="message" class="form-label">Your Message</label>
                                 <textarea class="form-control" id="message" name="message" rows="5"
-                                    placeholder="Write your message here..."></textarea>
+                                    placeholder="Write your message here..." value="{{ old('message') }}"></textarea>
                                 @error('message')
                                     <div class="text-danger mt-2">{{ $message }}</div>
                                 @enderror
