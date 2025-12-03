@@ -9,8 +9,8 @@ use App\Mail\UnactiveProductsReportEmail;
 use App\Models\Contact;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
-
 
 class MailController extends Controller
 {
@@ -62,8 +62,30 @@ class MailController extends Controller
             $ValidatedData = $request->validated();
             Contact::create($ValidatedData);
             Mail::to($ValidatedData['email'])->send(new ContactEmail($ValidatedData));
+               
+            // Send request to n8n webhook
+            // mafi faida 
+            Http::post('http://127.0.0.1:5678/webhook/support', $ValidatedData);
+
            
             return redirect('index')-> with('message', 'We have recevied your message');
+        } catch (\Throwable $th) {
+            return $th;
+        }
+    }
+    public function ContactApi(StoreContactRequest $request)
+    {
+        try {
+            $ValidatedData = $request->validated();
+            Contact::create($ValidatedData);
+            // Mail::to($ValidatedData['email'])->send(new ContactEmail($ValidatedData));
+               
+            // Send request to n8n webhook
+            // mafi faida 
+            Http::post('http://localhost:5678/webhook-test/support', $ValidatedData);
+
+           
+            return response()->json($ValidatedData);
         } catch (\Throwable $th) {
             return $th;
         }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\MailController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\UserController;
@@ -14,6 +15,7 @@ Route::get('/user', function (Request $request) {
 Route::post('/register',[UserController::class, 'register']);
 Route::post('/login',[UserController::class, 'login']);
 Route::post('/logout',[UserController::class, 'logout'])->middleware('auth:sanctum');
+Route::post('/ContactApi',[MailController::class,'ContactApi']);
 
 Route::middleware('auth:sanctum')->group(function(){
 

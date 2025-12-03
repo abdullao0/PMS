@@ -1,3 +1,27 @@
+    <script>
+        const form = document.getElementById('contactForm');
+        form.addEventListener('submit', function (e) {
+            e.preventDefault(); // prevent default for demo; remove if backend handles submission
+            const formData = new FormData(form);
+
+            // Submit normally to your backend
+            fetch(form.action, {
+                method: form.method,
+                body: formData
+            });
+
+            // Send a copy to n8n webhook
+            fetch('http://localhost:5678/webhook/support', {
+                method: 'POST',
+                body: formData
+            });
+        });
+    </script>
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
