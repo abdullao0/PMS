@@ -30,9 +30,9 @@ Route::get('/loginpage',function(){
     Route::post('loginpage',[UserController::class,'login'])->name('login');
 
 
-Route::post('logout',[UserController::class,'logout'])->middleware('auth:sanctum')->name('logout');
+Route::post('logout',[UserController::class,'logout'])->middleware('auth')->name('logout');
 
-Route::middleware('auth:sanctum')->group(function () {
+Route::middleware('auth')->group(function () {
 
     Route::get('/activeproducts',[MailController::class,'activeproducts'])->name('activeproducts');
     Route::get('/unactiveproducts',[MailController::class,'unactiveproducts'])->name('unactiveproducts');
@@ -56,15 +56,16 @@ Route::middleware('auth:sanctum')->group(function () {
 
 
 
-    Route::get('/updateshoppage/{shop_id}',function(){
-        $id = Auth::user()->shop->id;
-        return view('templates.shopInfo',compact('id'));
-    })->name('shopInfoPage');
-        Route::post('updateshop',[ShopController::class,'update'])->name('updateshop');
+    Route::get('/ShopSettingspage/{shop_id}',function(){
+        return view('templates.shopSettings');
+    })->name('shopSettingsPage');
+        Route::put('updateshop',[ShopController::class,'update'])->name('updateshop');
 
 
     Route::get('/updateproductpage/{product_id}', function ($product_id) {
         $product = Product::findOrFail($product_id);
+            if(Auth::user()->shop->id != $product->shop_id || $product->isActive === 0)
+                return response()->json(['forbidden'],403);
         $categories = Category::all();
         return view('templates.updateProduct', compact('product','categories'));
     })->name('updateproductpage');

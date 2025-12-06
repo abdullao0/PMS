@@ -15,7 +15,7 @@ class UpdateShopRequest extends FormRequest
     {
         return [
             'name'=>'string|sometimes',
-            'numberOfEmployees'=>'integer|sometimes',
+            'numberOfEmployees'=>'string|nullable',
             'logo'=>'string|nullable',
             'description'=>'string|nullable',
         ];

@@ -265,12 +265,14 @@ function logoutt() {
         <!-- Update Shop Information Section -->
         <div class="settings-section">
             <h2 class="section-title"><i class="bi bi-pencil-square"></i> Update Shop Information</h2>
-            <form class="settings-form" method="post" action="{{ route('updateshop', $id) }}" enctype="multipart/form-data">
+        
+            <form class="settings-form" method="post" action="{{ route('updateshop',Auth::user()->shop->id ) }}" enctype="multipart/form-data">
                 @csrf
+                @method('PUT')
                 <div class="form-grid">
                     <div class="form-field">
                         <label for="name">Store Name</label>
-                        <input type="text" id="name" name="name" value="{{ old('name') }}" placeholder="Enter store name">
+                        <input type="text" id="name" name="name" value="{{ Auth::user()->shop->name }}" placeholder="Enter store name">
                         @error('name')
                             <span class="error-message">{{ $message }}</span>
                         @enderror
@@ -278,7 +280,7 @@ function logoutt() {
                     <div class="form-field">
                         <label for="numberOfEmployees">Number of Employees</label>
                         <input type="number" id="numberOfEmployees" name="numberOfEmployees"
-                            value="{{ old('numberOfEmployees') }}" placeholder="Enter number of employees" min="0">
+                            value="{{ Auth::user()->shop->numberOfEmployees }}" placeholder="Enter number of employees" min="0">
                         @error('numberOfEmployees')
                             <span class="error-message">{{ $message }}</span>
                         @enderror
@@ -286,7 +288,7 @@ function logoutt() {
                     <div class="form-field full-width">
                         <label for="description">Description</label>
                         <textarea id="description" name="description"
-                            placeholder="Describe your shop">{{ old('description') }}</textarea>
+                            placeholder="Describe your shop">{{ Auth::user()->shop->description }}</textarea>
                         @error('description')
                             <span class="error-message">{{ $message }}</span>
                         @enderror

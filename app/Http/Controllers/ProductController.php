@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AddCategoryToProdcutRequest;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
-use App\Models\Product;
+use App\Services\ProductService;
+use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use SebastianBergmann\CodeUnit\FunctionUnit;
@@ -12,46 +14,32 @@ use SebastianBergmann\CodeUnit\FunctionUnit;
 
 class ProductController extends Controller
 {
-public function store(StoreProductRequest $request)
-{
-    if (!Auth::check()) {
-        return response()->json(['message' => 'Please log in first'], 403);
+    protected $service;
+    public function __construct(ProductService $service )
+    {
+        $this->service = $service;
+    }
+    public function store(StoreProductRequest $request)
+    {
+        $data = $request->Validated();
+        $this->service->store($data);
+
+        return redirect()->route('shopdashboard')->with('message', 'Product added successfully');
     }
 
-    $shop_id = Auth::user()->shop->id;
-    $validatedData = $request->validated();
-    $validatedData['shop_id'] = $shop_id;
-
-    // Create the product
-    $product = Product::create($validatedData);
-
-    // Attach categories if they exist in the request
-    if (isset($validatedData['categories'])) {
-        $product->categories()->attach($validatedData['categories']);
-    }
-
-    return redirect()->route('shopdashboard')->with('message', 'Product added successfully');
-}
-
-
-
-    
 
     public function index()
     {
-        $shop_id = Auth::user()->shop->id;
-        $products = Product::where('shop_id',$shop_id)->get();
+
+       $products = $this->service->index();
 
         return response()->json([$products]);
     }
 
     public function show($product_id)
     {
-
-        $product = Product::findOrFail($product_id);
-
+        $product = $this->service->show($product_id);
         return response()->json([$product]);
-
     }
 
     // public function update(UpdateProductRequest $request,$product_id)
@@ -73,31 +61,16 @@ public function store(StoreProductRequest $request)
 
     public function update(UpdateProductRequest $request, $product_id)
 {
-    $product = Product::findOrFail($product_id);
-    $validatedData = $request->validated();
+    $data = $request->validated();
+    $this->service->update($product_id,$data);
 
-    // Update the product
-    $product->update($validatedData);
-
-    // Sync categories if they exist in the request
-    if (isset($validatedData['categories'])) {
-        $product->categories()->sync($validatedData['categories']);
-    } else {
-        // If no categories are selected, remove all categories
-        $product->categories()->detach();
-    }
-    
     return redirect()->route('shopdashboard')->with('message', 'Product updated successfully');
 }
 
 
     public function deactiveate($product_id)
     {
-        Auth::user()->shop_id;
-        $product = Product::findOrFail($product_id);
-        
-        $product->update(['isActive'=>false]);
-
+        $this->service->deactiveate($product_id);
         // return response()->json(['softdelete done',$product], 200);
         return redirect('shopdashboard');
     }
@@ -105,36 +78,25 @@ public function store(StoreProductRequest $request)
 
     public function destroy($product_id)
     {
-        $shop_id = Auth::user()->shop_id;
-        $product = Product::findOrFail($product_id);
-        if($shop_id != $product->shop_id)
-        {
-            return response()->json(['message'=>'Unauthraized User'],403);
-        }
-
-        $product->delete();
+        $this->service->destroy($product_id);
+        
         return response()->json([
             'message'=>'product deleted successfully'
         ],200);
     }
 
-    public function addCategoryToProduct(Request $request,$product_id)
+    public function addCategoryToProduct(AddCategoryToProdcutRequest $request,$product_id)
     {
 
-    $request->validate([
-        'category_id' => 'required|integer|exists:categories,id',
-    ]);
-    $product = Product::findOrFail($product_id);
-
-    $product->categories()->attach($request->category_id);
+    $data = $request->validated();
+    $product = $this->service->addCategoryToProduct($product_id,$data);
 
     return response()->json(['message' => 'Category attached successfully','product' => $product,], 201);
     }
 
     public function showProductCategories($product_id)
     {
-        $product = Product::findOrFail($product_id);
-        $categories = $product->categories;
+        $categories = $this->showProductCategories($product_id);
         return response()->json([$categories], 200);
 
     }

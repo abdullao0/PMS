@@ -7,11 +7,18 @@ use App\Http\Requests\UpdateProductRequest;
 use App\Models\Product;
 use App\Models\Shop;
 use App\Models\User;
+use App\Services\ShopService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class ShopController extends Controller
 {
+    protected $service;
+
+    public function __construct(ShopService $service )
+    {
+        $this->service = $service;
+    }
     public function store(StoreShopRequest $request)
     {
         if (!Auth::check()) {

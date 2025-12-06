@@ -78,7 +78,7 @@ class MailController extends Controller
         try {
             $ValidatedData = $request->validated();
             Contact::create($ValidatedData);
-            // Mail::to($ValidatedData['email'])->send(new ContactEmail($ValidatedData));
+            Mail::to($ValidatedData['email'])->send(new ContactEmail($ValidatedData));
                
             // Send request to n8n webhook
             // mafi faida 

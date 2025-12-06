@@ -254,12 +254,12 @@
 
         <div class="dashboard-actions">
             <button type="button">
-                <a href="{{ route('addproductpage', $products->pluck('id')) }}">
+                <a href="{{ route('addproductpage') }}">
                     <i class="bi bi-plus-circle"></i> Add Product
                 </a>
             </button>
             <button type="button">
-                <a href="{{ route('shopInfoPage', $shop->id) }}">
+                <a href="{{ route('shopSettingsPage', $shop->id) }}">
                     <i class="bi bi-gear-fill"></i> Shop Settings
                 </a>
             </button>

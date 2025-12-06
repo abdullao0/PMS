@@ -177,7 +177,7 @@
     <div class="updateproduct-container">
         <div class="updateproduct-card">
             <h2 class="updateproduct-title">Update Product</h2>
-            <form class="updateproduct-form" method="post" action="{{ route('updateproduct', $product) }}"
+            <form class="updateproduct-form" method="post" action="{{ route('updateproduct', $product->id) }}"
                 enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
