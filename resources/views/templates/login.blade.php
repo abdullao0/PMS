@@ -186,7 +186,7 @@
                     </div>
                 @enderror
             </div>
-            <button type="submit" class="btn-login"  onclick="style.display = 'none' ">
+            <button type="submit" class="btn-login">
                 <i class="bi bi-box-arrow-in-right"></i> Login
             </button>
             <div class="login-footer" >

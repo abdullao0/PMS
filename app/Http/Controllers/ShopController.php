@@ -20,57 +20,30 @@ class ShopController extends Controller
         $this->service = $service;
     }
     public function store(StoreShopRequest $request)
-    {
-        if (!Auth::check()) {
-            return response()->json(['message'=>'Please log in first'],403);
-        }
-        $user_id = Auth::user()->id;
-        $validatedData = $request->validated();
-        $validatedData['user_id'] = $user_id;
-        if ($request->hasFile('logo'))
-            $validatedData['logo'] = $request->file('logo')->store('logo','public');
-
-        $shop = Shop::create($validatedData);
+    { 
+        $data = $request->validated();
+        $this->service->store($data);
+        
         return redirect('shopdashboard');
         // return response()->json(['message'=>'shop crated','data'=>$shop],201);
-
     }
 
     public function index()
     {
-        $shops = Shop::all();
-        return response()->json([$shops]);
+        $shops = $this->service->index();
+        return response()->json($shops,200);
     }
 
     public function show($shop_id)
     {
-
-        $user_id = Auth::user()->id;
-        if ($user_id != $shop_id)
-        {
-            return response()->json(['message' => 'Unauthraized User'], 403);
-        }
-
-        $shop = Shop::where('id',$shop_id)->firstOrFail();
-
+        $shop = $this->service->show($shop_id);
         return response()->json([$shop]);
-
-
     }
 
 public function update(UpdateProductRequest $request)
 {
-    $user = Auth::user();
-    $shop = $user->shop;
-
-    if (!$shop) {
-        return redirect()->back()->with('error', 'Shop not found.');
-    }
-
-    $validatedData = $request->validated();
-
-    $shop->update($validatedData);
-
+    $data = $request->validated();
+    $shop = $this->service->update($data);
     return redirect()->route('shopdashboard')->with('message', 'Shop updated successfully');
 }
 

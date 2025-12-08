@@ -33,14 +33,16 @@ class UserService
     {
         if (!Auth::attempt($data)) 
         {
-            return redirect('loginpage')->with('error', 'Wrong password or email');
+            return false;
         }
 
-        $user = User::where('email', $data['email'])->firstOrFail();
+        session()->regenerate();
+
+        $user = Auth::user();
 
         Mail::to($user->email)->send(new WellcomeBackEmail($user));
         
-        return Auth::user();
+        return $user;
     }
 
 
