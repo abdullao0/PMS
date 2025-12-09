@@ -31,10 +31,9 @@ class UserService
 
     public function login($data)
     {
-        if (!Auth::attempt($data)) 
+        try 
         {
-            return false;
-        }
+        Auth::attempt($data);
 
         session()->regenerate();
 
@@ -43,6 +42,12 @@ class UserService
         Mail::to($user->email)->send(new WellcomeBackEmail($user));
         
         return $user;
+        }
+        catch (\Throwable) 
+        {
+            return false;
+        }
+
     }
 
 

@@ -48,7 +48,6 @@ class UserController extends Controller
     {
         $data = $request->validated();
 
-        // Track attempts using cache (RateLimiter)
         $key = 'login-attempts:' . $request->ip();
         $maxAttempts = 5;
 
@@ -56,9 +55,11 @@ class UserController extends Controller
         {
             return back()->with('error', 'Too many attempts. Try again later.');
         }
-
         // Try login
-        if (!Auth::attempt($data)) 
+        $user = $this->service->login($data);
+
+        
+        if (!$user) 
         {
             // Increase attempt count
             RateLimiter::hit($key, 60); // 60 sec decay
