@@ -169,7 +169,7 @@
         <form class="login-form" method="post" action="{{ route('login') }}">
             @csrf
             <div class="form-field">
-                <label for="email">Email</label>
+                <label for="email">Email *</label>
                 <input type="email" id="email" name="email" value="{{ old('email') }}" placeholder="Enter your email">
                 @error('email')
                     <div class="error-message">
@@ -178,7 +178,7 @@
                 @enderror
             </div>
             <div class="form-field">
-                <label for="password">Password</label>
+                <label for="password">Password *</label>
                 <input type="password" id="password" name="password" placeholder="Enter your password">
                 @error('password')
                     <div class="error-message">

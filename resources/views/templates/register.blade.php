@@ -134,7 +134,7 @@
         <form class="register-form" method="post" action="{{ route('register') }}">
             @csrf
             <div class="form-field">
-                <label for="name">Name</label>
+                <label for="name">Name *</label>
                 <input type="text" id="name" name="name" value="{{ old('name') }}">
                 @error('name')
                     <div class="error-message">
@@ -143,7 +143,7 @@
                 @enderror
             </div>
             <div class="form-field">
-                <label for="email">Email</label>
+                <label for="email">Email *</label>
                 <input type="email" id="email" name="email" value="{{ old('email') }}">
                 @error('email')
                     <div class="error-message">
@@ -152,7 +152,7 @@
                 @enderror
             </div>
             <div class="form-field">
-                <label for="age">How Old Are You?</label>
+                <label for="age">How Old Are You? *</label>
                 <input type="number" id="age" name="age" value="{{ old('age') }}">
                 @error('age')
                     <div class="error-message">
@@ -161,7 +161,7 @@
                 @enderror
             </div>
             <div class="form-field">
-                <label for="password">Password</label>
+                <label for="password">Password *</label>
                 <input type="password" id="password" name="password">
                 @error('password')
                     <div class="error-message">
@@ -170,7 +170,7 @@
                 @enderror
             </div>
             <div class="form-field">
-                <label for="password_confirmation">Confirm Password</label>
+                <label for="password_confirmation">Confirm Password *</label>
                 <input type="password" id="password_confirmation" name="password_confirmation">
                 @error('password_confirmation')
                     <div class="error-message">
@@ -178,7 +178,7 @@
                     </div>
                 @enderror
             </div>
-            <button type="submit" class="btn-register" onclick="style.display = 'none' ">Register</button>
+            <button type="submit" class="btn-register">Register</button>
             <div class="register-footer">
                 <p>Already have an account? <a href="{{ route('loginpage') }}">Login</a></p>
             </div>
