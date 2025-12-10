@@ -88,7 +88,7 @@ class UserController extends Controller
 
     public function logout()
     {
-        $this->service->logout();
+        Auth::guard('web')->logout();
         return redirect('index')->with('message', 'User Loged Out Successfully');
     }
 }
