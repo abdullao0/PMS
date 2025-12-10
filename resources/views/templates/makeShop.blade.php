@@ -162,7 +162,7 @@
                 @enderror
             </div>
             <div>
-                <button type="submit" class="btn-makeshop" onclick="style.display = 'none' ">
+                <button type="submit" class="btn-makeshop">
                     <i class="bi bi-shop"></i> Create Shop
                 </button>
             </div>

@@ -191,27 +191,27 @@
 <div class="addproduct-container">
     <div class="addproduct-card">
         <h2 class="addproduct-title">Add New Product</h2>
-        <form class="addproduct-form" method="post" action="{{ route('addproduct') }}" enctype="multipart/form-data">
+        <form class="addproduct-form" method="post" action="{{ route('addproduct') }}" enctype="multipart/form-data" novalidate>
             @csrf
             
             <!-- Name, Price, and Quantity in one row -->
             <div class="form-grid-three">
                 <div class="form-field">
-                    <label for="name">Product Name</label>
+                    <label for="name">Product Name *</label>
                     <input type="text" id="name" name="name" value="{{ old('name') }}" placeholder="Enter product name">
                     @error('name')
                         <span class="error-message">{{ $message }}</span>
                     @enderror
                 </div>
                 <div class="form-field">
-                    <label for="price">Price</label>
+                    <label for="price">Price *</label>
                     <input type="number" id="price" name="price" value="{{ old('price') }}" placeholder="Enter price" step="0.01" min="0">
                     @error('price')
                         <span class="error-message">{{ $message }}</span>
                     @enderror
                 </div>
                 <div class="form-field">
-                    <label for="QTY">Quantity</label>
+                    <label for="QTY">Quantity *</label>
                     <input type="number" id="QTY" name="QTY" value="{{ old('QTY') }}" placeholder="Enter quantity" min="0">
                     @error('QTY')
                         <span class="error-message">{{ $message }}</span>
@@ -244,7 +244,7 @@
             </div>
 
             <div>
-                <button type="submit" class="btn-addproduct" onclick="style.display = 'none'">
+                <button type="submit" class="btn-addproduct">
                     <i class="bi bi-plus-circle"></i> Add Product
                 </button>
             </div>

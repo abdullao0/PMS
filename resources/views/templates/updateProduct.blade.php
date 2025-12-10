@@ -178,7 +178,7 @@
         <div class="updateproduct-card">
             <h2 class="updateproduct-title">Update Product</h2>
             <form class="updateproduct-form" method="post" action="{{ route('updateproduct', $product->id) }}"
-                enctype="multipart/form-data">
+                enctype="multipart/form-data" novalidate>
                 @csrf
                 @method('PUT')
 
@@ -216,8 +216,7 @@
                         <label>Categories</label>
                         <div class="checkbox-group">
                             @php
-                                $productCategories = $product->categories->pluck('id')->toArray();
-                                $oldCategories = old('category', $productCategories);
+                                $oldCategories = old('category', $product->categories->pluck('id')->toArray());
                             @endphp
                             @foreach(\App\Models\Category::all() as $category)
                                 <label class="checkbox-label">
@@ -241,7 +240,7 @@
                 </div>
 
                 <div>
-                    <button type="submit" class="btn-updateproduct" onclick="style.display = 'none'">
+                    <button type="submit" class="btn-updateproduct">
                         <i class="bi bi-save"></i> Update Product
                     </button>
                 </div>

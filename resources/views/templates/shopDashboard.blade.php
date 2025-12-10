@@ -247,7 +247,7 @@
     @endif
     <div class="dashboard-container">
         <div class="dashboard-header">
-            <h2><i class="bi bi-shop"></i> {{ $shop->name }}</h2>
+            <h2><i class="bi bi-shop"></i> {{ $shop->name  ?? "go to shop settings to set a name for your shop"}}</h2>
             <p><i class="bi bi-people-fill"></i> <strong>Number Of Employees:</strong> {{ $shop->numberOfEmployees ?? "NaN" }}</p>
             <p><i class="bi bi-envelope-fill"></i> <strong>Owner:</strong> {{ $shop->user->name }}</p>
         </div>
@@ -282,7 +282,7 @@
                     @forelse($products as $product)
                         <tr>
                             <td>{{ $product->name }}</td>
-                            <td>{{ $product->description }}</td>
+                            <td>{{ $product->description ?? "No Description For This Product" }}</td>
 
 
                             <td>
