@@ -49,11 +49,4 @@ class UserService
         }
 
     }
-
-
-    public function logout()
-    {
-        Auth::guard('web')->logout();
-    }
-
 }
