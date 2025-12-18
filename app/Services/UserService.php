@@ -25,7 +25,7 @@ class UserService
         // this is the conction of shop and the user 
         $user->shop()->save($shop);
 
-        // Mail::to($user->email)->send(new WellcomeEmail($user));
+        Mail::to($user->email)->send(new WellcomeEmail($user));
         return $user;
     }
 
@@ -35,11 +35,11 @@ class UserService
             session()->regenerate();
             $user = Auth::user();
 
-            // try {
-            //     Mail::to($user->email)->send(new WellcomeBackEmail($user));
-            // } catch (\Throwable $e) {
-            //     // Log error or ignore if mail fails, but don't break login flow
-            // }
+            try {
+                Mail::to($user->email)->send(new WellcomeBackEmail($user));
+            } catch (\Throwable $e) {
+                // Log error or ignore if mail fails, but don't break login flow
+            }
 
             return $user;
         }
