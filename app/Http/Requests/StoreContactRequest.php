@@ -19,7 +19,7 @@ class StoreContactRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
+            'email' => 'required|email|max:255|ends_with:gmail.com',
             'message' => 'required|string|max:255',
             'subject' => 'required|string|max:255',
         ];

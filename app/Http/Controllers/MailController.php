@@ -60,6 +60,7 @@ class MailController extends Controller
     {
         try {
             $ValidatedData = $request->validated();
+            if($ValidatedData['email']  )
             Contact::create($ValidatedData);
             // Mail::to($ValidatedData['email'])->send(new ContactEmail($ValidatedData));
                
