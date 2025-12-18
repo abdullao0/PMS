@@ -48,32 +48,38 @@ class UserController extends Controller
     {
         $data = $request->validated();
 
-        $key = 'login-attempts:' . $request->ip();
-        $maxAttempts = 5;
+        $maxAttempts = 3;
+        $decaySeconds = 60;
 
-        if (!RateLimiter::remaining($key, $maxAttempts)) 
-        {
-            return back()->with('error', 'Too many attempts. Try again later.');
+        $key = 'login_attempt| {$request->email}'. $request->ip();
+
+        if (RateLimiter::tooManyAttempts($key, $maxAttempts)) {
+            return back()->with(
+                'error',
+                'Too many login attempts. Please try again in 1 minute.'
+            );
         }
-        // Try login
+
         $user = $this->service->login($data);
 
-        
-        if (!$user) 
-        {
-            // Increase attempt count
-            RateLimiter::hit($key, 60); // 60 sec decay
+        if (!$user) {
+            // Count failed attempt
+            RateLimiter::hit($key, $decaySeconds);
 
             $remaining = RateLimiter::remaining($key, $maxAttempts);
 
-            return back()
-            ->with('error', "Wrong email or password. ($remaining attempt left)");
+            return back()->with(
+                'error',
+                "Wrong email or password. ({$remaining} attempts left)"
+            );
         }
 
-        // If login success — clear attempts
-        RateLimiter::clear($key);
+        // if success cleara and regenerate session
 
-        return redirect('shopdashboard');
+        RateLimiter::clear($key);
+        $request->session()->regenerate();
+
+        return redirect()->route('shopdashboard');
     }
 
 

@@ -31,22 +31,19 @@ class UserService
 
     public function login($data)
     {
-        try 
-        {
-        Auth::attempt($data);
+        if (Auth::attempt($data)) {
+            session()->regenerate();
+            $user = Auth::user();
 
-        session()->regenerate();
+            try {
+                Mail::to($user->email)->send(new WellcomeBackEmail($user));
+            } catch (\Throwable $e) {
+                // Log error or ignore if mail fails, but don't break login flow
+            }
 
-        $user = Auth::user();
-
-        Mail::to($user->email)->send(new WellcomeBackEmail($user));
-        
-        return $user;
-        }
-        catch (\Throwable) 
-        {
-            return false;
+            return $user;
         }
 
+        return null;
     }
 }

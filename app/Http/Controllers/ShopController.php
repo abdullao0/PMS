@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreShopRequest;
 use App\Http\Requests\UpdateProductRequest;
+use App\Http\Requests\UpdateShopRequest;
 use App\Models\Product;
 use App\Models\Shop;
 use App\Models\User;
@@ -15,15 +16,15 @@ class ShopController extends Controller
 {
     protected $service;
 
-    public function __construct(ShopService $service )
+    public function __construct(ShopService $service)
     {
         $this->service = $service;
     }
     public function store(StoreShopRequest $request)
-    { 
+    {
         $data = $request->validated();
         $this->service->store($data);
-        
+
         return redirect('shopdashboard');
         // return response()->json(['message'=>'shop crated','data'=>$shop],201);
     }
@@ -31,7 +32,7 @@ class ShopController extends Controller
     public function index()
     {
         $shops = $this->service->index();
-        return response()->json($shops,200);
+        return response()->json($shops, 200);
     }
 
     public function show($shop_id)
@@ -40,12 +41,12 @@ class ShopController extends Controller
         return response()->json([$shop]);
     }
 
-public function update(UpdateProductRequest $request)
-{
-    $data = $request->validated();
-    $shop = $this->service->update($data);
-    return redirect()->route('shopdashboard')->with('message', 'Shop updated successfully');
-}
+    public function update(UpdateShopRequest $request)
+    {
+        $data = $request->validated();
+        $shop = $this->service->update($data);
+        return redirect()->route('shopdashboard')->with('message', 'Shop updated successfully');
+    }
 
 
     public function destroy($shop_id)
@@ -53,8 +54,8 @@ public function update(UpdateProductRequest $request)
         $shop = Shop::findOrFail($shop_id);
         $shop->delete();
         return response()->json([
-            'message'=>'shop deleted successfully'
-        ],200);
+            'message' => 'shop deleted successfully'
+        ], 200);
     }
-    
+
 }

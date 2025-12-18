@@ -231,6 +231,28 @@
         </style>
     @endpush
 
+    <script>
+        function confirmm(button) {
+            Swal.fire({
+                title: "Are you sure?",
+                text: "This product will be deactivated. You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, deactivate it!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // submit the form using the class
+                    button.closest('.DA').submit();
+                }
+            });
+        }
+
+
+    </script>
+
+
     @if (session('message'))
         @php
             $msg = session('message');
@@ -245,10 +267,26 @@
             });
         </script>
     @endif
+
+    @if (session('error'))
+        @php
+            $msg = session('error');
+        @endphp
+
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'error',
+                text: '{{ $msg }}',
+                confirmButtonColor: '#b93a10ff'
+            });
+        </script>
+    @endif
     <div class="dashboard-container">
         <div class="dashboard-header">
-            <h2><i class="bi bi-shop"></i> {{ $shop->name  ?? "go to shop settings to set a name for your shop"}}</h2>
-            <p><i class="bi bi-people-fill"></i> <strong>Number Of Employees:</strong> {{ $shop->numberOfEmployees ?? "NaN" }}</p>
+            <h2><i class="bi bi-shop"></i> {{ $shop->name ?? "go to shop settings to set a name for your shop"}}</h2>
+            <p><i class="bi bi-people-fill"></i> <strong>Number Of Employees:</strong>
+                {{ $shop->numberOfEmployees ?? "NaN" }}</p>
             <p><i class="bi bi-envelope-fill"></i> <strong>Owner:</strong> {{ $shop->user->name }}</p>
         </div>
 
@@ -282,7 +320,7 @@
                     @forelse($products as $product)
                         <tr>
                             <td>{{ $product->name }}</td>
-                            <td>{{ $product->description ?? "No Description For This Product" }}</td>
+                            <td>{{ $product->description ?? "NaN" }}</td>
 
 
                             <td>
@@ -305,14 +343,14 @@
                                 </form>
                             </td>
                             <td>
-                                <form class="action-form" action="{{ route('deleteproduct', $product->id) }}" method="post"
-                                    onsubmit="return confirm('Are you sure you want to delete this product?');">
+                                <form class="DA action-form" action="{{ route('deleteproduct', $product->id) }}" method="post">
                                     @csrf
                                     @method('PUT')
-                                    <button type="submit" class="btn-action btn-delete">
+                                    <button type="button" class="btn-action btn-delete" onclick="confirmm(this)">
                                         <i class="bi bi-trash-fill"></i> Delete
                                     </button>
                                 </form>
+
                             </td>
                         </tr>
                     @empty

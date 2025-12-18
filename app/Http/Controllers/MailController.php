@@ -61,11 +61,11 @@ class MailController extends Controller
         try {
             $ValidatedData = $request->validated();
             Contact::create($ValidatedData);
-            Mail::to($ValidatedData['email'])->send(new ContactEmail($ValidatedData));
+            // Mail::to($ValidatedData['email'])->send(new ContactEmail($ValidatedData));
                
             // Send request to n8n webhook
-            // mafi faida 
-            Http::post('http://127.0.0.1:5678/webhook/support', $ValidatedData);
+            Http::withHeaders(['Content-Type' => 'application/json'])
+            ->post('https://ppmmss.app.n8n.cloud/webhook/support', $ValidatedData);
 
            
             return redirect('index')-> with('message', 'We have recevied your message');

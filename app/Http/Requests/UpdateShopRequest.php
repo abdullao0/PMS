@@ -14,10 +14,10 @@ class UpdateShopRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'=>'string|sometimes',
-            'numberOfEmployees'=>'string|nullable',
-            'logo'=>'string|nullable',
-            'description'=>'string|nullable',
+            'name' => 'string|sometimes',
+            'numberOfEmployees' => 'integer|nullable',
+            'logo' => 'string|nullable',
+            'description' => 'string|nullable',
         ];
     }
 }

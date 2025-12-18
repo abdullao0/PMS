@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+    <link rel="icon" type="image/svg+xml" href="{{ asset('favicon.svg') }}">
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -194,10 +195,26 @@
         </script>
     @endif
 
+
+    @if (session('error'))
+        @php
+            $msg = session('error');
+        @endphp
+
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'error',
+                text: '{{ $msg }}',
+                confirmButtonColor: '#b93a10ff'
+            });
+        </script>
+    @endif
+
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
         <div class="container">
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="/">
                 <i class="bi bi-box-seam"></i> PMS
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -241,7 +258,7 @@
                     <div class="service-card text-center">
                         <i class="bi bi-speedometer2 service-icon"></i>
                         <h4>Fast & Efficient</h4>
-                        <p>Manage your products with lightning-fast performance and intuitive workflows designed for
+                        <p>Manage your products with lightning-fast performance and
                             maximum productivity.</p>
                     </div>
                 </div>
@@ -257,8 +274,7 @@
                     <div class="service-card text-center">
                         <i class="bi bi-people service-icon"></i>
                         <h4>Beginner Friendly</h4>
-                        <p>Designed specifically for beginners with easy-to-use interfaces and helpful guides every step
-                            of the way.</p>
+                        <p>Designed specifically for beginners with easy-to-use interfaces.</p>
                     </div>
                 </div>
             </div>
@@ -276,8 +292,7 @@
                 <div class="col-lg-8">
                     <div class="faq-item">
                         <div class="faq-question"><i class="bi bi-question-circle"></i> What is PMS?</div>
-                        <p class="mb-0">PMS is the first product management system designed for beginners. It provides
-                            an intuitive platform to manage your products efficiently.</p>
+                        <p class="mb-0">PMS is the first product management system designed for beginners.</p>
                     </div>
                     <div class="faq-item">
                         <div class="faq-question"><i class="bi bi-question-circle"></i> Is it free?</div>
@@ -336,7 +351,7 @@
                                 @enderror
                             </div>
                             <div class="text-center">
-                                <button onclick="style.display = 'none' " type="submit" class="btn btn-primary-custom">
+                                <button type="submit" class="btn btn-primary-custom">
                                     <i class="bi bi-send"></i> Send Message
                                 </button>
                             </div>

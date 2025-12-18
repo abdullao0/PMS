@@ -40,7 +40,8 @@ class ShopService
     {
         $shop = Auth::user()->shop;
 
-        if (!$shop)
+
+        if (!$shop || Auth::user()->shop->id != $shop->id )
         {
             return redirect()->back()->with('error', 'Shop not found.');
         }
