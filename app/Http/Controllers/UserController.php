@@ -51,7 +51,7 @@ class UserController extends Controller
         $maxAttempts = 3;
         $decaySeconds = 60;
 
-        $key = 'login_attempt| {$request->email}'. $request->ip();
+        $key = 'login_attempt|' . $request->ip();
 
         if (RateLimiter::tooManyAttempts($key, $maxAttempts)) {
             return back()->with(

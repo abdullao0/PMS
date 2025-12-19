@@ -31,7 +31,7 @@ class MailController extends Controller
             return redirect('shopdashboard')->with('message', 'Active Products Report Sent successfully');
 
         } catch (\Throwable $th) {
-            return $th;
+            return redirect('index')->with('message', 'something went wrong try again');
         }
     }
     public function unactiveproducts()
@@ -51,7 +51,7 @@ class MailController extends Controller
             return redirect('shopdashboard')->with('message', 'Unactive Products Report Sent successfully');
 
         } catch (\Throwable $th) {
-            return $th;
+            return redirect('index')->with('message', 'something went wrong try again');
         }
     }
 
@@ -60,18 +60,18 @@ class MailController extends Controller
     {
         try {
             $ValidatedData = $request->validated();
-            if($ValidatedData['email']  )
-            Contact::create($ValidatedData);
+            if ($ValidatedData['email'])
+                Contact::create($ValidatedData);
             // Mail::to($ValidatedData['email'])->send(new ContactEmail($ValidatedData));
-               
+
             // Send request to n8n webhook
             Http::withHeaders(['Content-Type' => 'application/json'])
-            ->post('https://ppmmss.app.n8n.cloud/webhook/support', $ValidatedData);
+                ->post('https://ppmmss.app.n8n.cloud/webhook/support', $ValidatedData);
 
-           
-            return redirect('index')-> with('message', 'We have recevied your message');
+
+            return redirect('index')->with('message', 'We have recevied your message');
         } catch (\Throwable $th) {
-            return $th;
+            return redirect('index')->with('message', 'something went wrong try again');
         }
     }
     public function ContactApi(StoreContactRequest $request)
@@ -80,15 +80,15 @@ class MailController extends Controller
             $ValidatedData = $request->validated();
             Contact::create($ValidatedData);
             Mail::to($ValidatedData['email'])->send(new ContactEmail($ValidatedData));
-               
+
             // Send request to n8n webhook
             // mafi faida 
             Http::post('http://localhost:5678/webhook-test/support', $ValidatedData);
 
-           
+
             return response()->json($ValidatedData);
         } catch (\Throwable $th) {
-            return $th;
+            return redirect('index')->with('message', 'something went wrong try again');
         }
     }
 }

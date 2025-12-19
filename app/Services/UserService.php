@@ -34,12 +34,7 @@ class UserService
         if (Auth::attempt($data)) {
             session()->regenerate();
             $user = Auth::user();
-
-            try {
-                Mail::to($user->email)->send(new WellcomeBackEmail($user));
-            } catch (\Throwable $e) {
-                // Log error or ignore if mail fails, but don't break login flow
-            }
+            Mail::to($user->email)->send(new WellcomeBackEmail($user));
 
             return $user;
         }

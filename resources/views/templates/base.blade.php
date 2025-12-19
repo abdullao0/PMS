@@ -147,6 +147,41 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const forms = document.querySelectorAll('form');
+            forms.forEach(form => {
+                form.addEventListener('submit', function (e) {
+                    // Check validity first
+                    if (!form.checkValidity()) {
+                        return;
+                    }
+
+                    // Special handling for logout form - rely on its own confirmation or logic if needed,
+                    // but freezing it is fine too as it redirects. 
+                    // However, sweetalert confirmation might clash if not handled carefully.
+                    // The logout function `logoutt()` submits programmatically: `document.querySelector('#logoutForm').submit();`
+                    // Programmatic submit() does NOT trigger the 'submit' event listener in some cases?
+                    // Actually, `form.submit()` does NOT trigger 'submit' event. So this script won't run for programmatic logout.
+                    // That's actually GOOD, because the logout is instant and we don't need to freeze UI for it usually.
+                    // But if the user clicks a normal submit button, it will freeze.
+
+                    // Visual feedback
+                    form.style.opacity = '0.7';
+                    form.style.pointerEvents = 'none';
+
+                    // Update submit button
+                    const submitBtn = form.querySelector('button[type="submit"]');
+                    if (submitBtn) {
+                        submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Please Wait...';
+                    }
+                });
+            });
+        });
+    </script>
+
+    @stack('scripts')
+
 </body>
 
 </html>

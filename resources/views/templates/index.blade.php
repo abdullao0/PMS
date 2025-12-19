@@ -371,9 +371,42 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
+    @if ($errors->any())
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                const contactSection = document.getElementById("contact");
+                if (contactSection) {
+                    contactSection.scrollIntoView({ behavior: "smooth" });
+                }
+            });
+        </script>
+    @endif
 
-
-
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const forms = document.querySelectorAll('form');
+            forms.forEach(form => {
+                form.addEventListener('submit', function(e) {
+                    if (!form.checkValidity()) {
+                        return;
+                    }
+                    
+                    // Visual feedback
+                    form.style.opacity = '0.7';
+                    form.style.pointerEvents = 'none';
+                    
+                    // Update submit button
+                    const submitBtn = form.querySelector('button[type="submit"]');
+                    if (submitBtn) {
+                        const originalText = submitBtn.innerText;
+                        submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Please Wait...';
+                        // We don't disable the button attribute to avoid preventing submit, 
+                        // but pointer-events: none on form handles the "no double click"
+                    }
+                });
+            });
+        });
+    </script>
 
 
 </body>

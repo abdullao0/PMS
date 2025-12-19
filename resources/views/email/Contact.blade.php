@@ -21,7 +21,7 @@
                             <p>Subject: {{ $data['subject'] }}</p>
                             <p>Message: {{ $data['message'] }}</p>
                                                         
-                            <p>If you need immediate assistance, please call us at [0599433494].</p>
+                            <p>If you need immediate assistance, please call us at 0599433494.</p>
                             
                             <p>Best regards,<br>PMS Team</p>
                         </td>
