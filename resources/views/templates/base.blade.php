@@ -155,16 +155,7 @@
                     // Check validity first
                     if (!form.checkValidity()) {
                         return;
-                    }
-
-                    // Special handling for logout form - rely on its own confirmation or logic if needed,
-                    // but freezing it is fine too as it redirects. 
-                    // However, sweetalert confirmation might clash if not handled carefully.
-                    // The logout function `logoutt()` submits programmatically: `document.querySelector('#logoutForm').submit();`
-                    // Programmatic submit() does NOT trigger the 'submit' event listener in some cases?
-                    // Actually, `form.submit()` does NOT trigger 'submit' event. So this script won't run for programmatic logout.
-                    // That's actually GOOD, because the logout is instant and we don't need to freeze UI for it usually.
-                    // But if the user clicks a normal submit button, it will freeze.
+                    } 
 
                     // Visual feedback
                     form.style.opacity = '0.7';
