@@ -24,8 +24,12 @@ class UserController extends Controller
     {
         $data = $request->validated();
 
-        $this->service->register($data);
+        $user = $this->service->register($data);
         // return response()->json(['message' => 'user created', 'userData' => $user], 201);
+
+        Auth::login($user);
+        $request->session()->regenerate();
+
         return redirect()->route('shopdashboard')->with('message', 'User Registerd Successfully');
 
     }

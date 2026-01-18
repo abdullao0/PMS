@@ -21,17 +21,18 @@ Route::middleware('LogoutOnPublic')->group(function () {
     })->name('index');
     Route::post('/Contact', [MailController::class, 'Contact'])->name('Contact');
 
+    Route::get('/registerpage', function () {
+        return view('templates.register');
+    })->name('registerpage');
 
+    Route::post('/register', [UserController::class, 'register'])->name('register');
 
     Route::get('/loginpage', function () {
         return view('templates.login');
     })->name('loginpage');
     Route::post('loginpage', [UserController::class, 'login'])->name('login');
 });
-Route::get('/registerpage', function () {
-    return view('templates.register');
-})->name('registerpage');
-Route::post('/register', [UserController::class, 'register'])->name('register');
+
 
 Route::post('logout', [UserController::class, 'logout'])->middleware('auth')->name('logout');
 
