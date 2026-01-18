@@ -29,9 +29,6 @@ class UserController extends Controller
 
         Auth::login($user);
         $request->session()->regenerate();
-
-        return redirect()->route('shopdashboard')->with('message', 'User Registerd Successfully');
-
     }
 
     // public function login(LoginUserRequest $request)
