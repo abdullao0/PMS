@@ -26,7 +26,7 @@ class UserController extends Controller
 
         $this->service->register($data);
         // return response()->json(['message' => 'user created', 'userData' => $user], 201);
-        return redirect('loginpage')->with('message', 'User Registerd Successfully');
+        return redirect()->route('shopdashboard')->with('message', 'User Registerd Successfully');
 
     }
 
