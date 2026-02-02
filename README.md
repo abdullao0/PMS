@@ -1,59 +1,125 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 🛒 PMS - Product Management System
 
 <p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+  <img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="300" alt="Laravel Logo">
+  <br>
+  <strong>A Modern, Integrated Solution for Shop and Product Management</strong>
 </p>
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 🌟 Overview
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+**PMS (Product Management System)** is a robust web application built with **Laravel 12**, designed to streamline how business owners manage their shops, inventories, and customer interactions. It bridges the gap between traditional management and modern automation by integrating **n8n** for seamless support workflows.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Whether you're managing a single shop or tracking a diverse product catalog across multiple categories, PMS provides the tools you need in a high-performance, user-friendly environment.
 
-## Learning Laravel
+## 🚀 Key Features
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+### 🏪 Shop Management
+- **Custom Shop Profiles**: Create and manage your shop with a unique identity, logo, and description.
+- **Team Tracking**: Maintain records of the number of employees for each shop.
+- **Settings Dashboard**: Easily update shop configurations as your business grows.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 📦 Product & Inventory
+- **Full CRUD Operations**: Create, read, update, and manage products with ease.
+- **Categorization**: Multi-category support for better product organization.
+- **Smart Status**: Toggle product visibility (Active/Inactive) to manage seasonal inventory or stock-outs.
+- **Real-time Analytics**: Built-in dashboard to view active product counts and stock levels.
 
-## Laravel Sponsors
+### 📨 Communication & Reporting
+- **Email Automation**: Generate and send detailed reports of active and inactive products directly to your inbox.
+- **Integrated Support**: A custom contact system that ensures your customers are always heard.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### 🤖 Automation (n8n Integration)
+- **Support Webhooks**: PMS is integrated with **n8n.cloud**. Contact form submissions are automatically pushed to an n8n webhook, allowing for advanced automation like:
+  - Auto-sending data to Slack/Discord.
+  - Creating support tickets in Trello or Jira.
+  - Feeding leads into a CRM.
 
-### Premium Partners
+---
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+## 🛠️ Technology Stack
 
-## Contributing
+### Backend
+- **Framework**: [Laravel 12](https://laravel.com)
+- **Language**: PHP 8.2+
+- **Database**: SQLite (Default) / MySQL / PostgreSQL
+- **Security**: Laravel Sanctum for secure API and session management.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### Frontend
+- **Engine**: Blade Templates
+- **Styling**: [Tailwind CSS 4.0](https://tailwindcss.com)
+- **Interactivity**: Axios for API calls, SweetAlert2 for beautiful notifications.
+- **Asset Bundling**: Vite
 
-## Code of Conduct
+### Orchestration & Tools
+- **Automation**: [n8n](https://n8n.io) (Low-code workflow automation)
+- **Deployment**: Laravel Vite Plugin
+- **Task Runner**: Composer & NPM
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+---
 
-## Security Vulnerabilities
+## ⚙️ Installation & Setup
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Follow these steps to get your project up and running locally.
 
-## License
+### Prerequisites
+- PHP 8.2+
+- Composer
+- Node.js & NPM
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### Setup Instructions
+
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/your-username/PMS.git
+   cd PMS
+   ```
+
+2. **Install Dependencies**:
+   ```bash
+   composer install
+   npm install
+   ```
+
+3. **Environment Configuration**:
+   ```bash
+   cp .env.example .env
+   php artisan key:generate
+   ```
+
+4. **Run Migrations & Seeders**:
+   ```bash
+   php artisan migrate
+   ```
+
+5. **Build Assets**:
+   ```bash
+   npm run build
+   ```
+
+6. **Start the Development Server**:
+   ```bash
+   composer dev
+   ```
+   *Note: This runs Laravel, Vite, and Queue listeners simultaneously.*
+
+---
+
+## 🔗 n8n Integration Details
+
+PMS uses a webhook-driven architecture for support. To configure your n8n workflow:
+
+1. Create a "Webhook" node in n8n.
+2. Set the method to `POST`.
+3. Update the URL in `app/Http/Controllers/MailController.php` (for backend) and `resources/views/welcome.blade.php` (for frontend) to match your n8n endpoint.
+
+Example Webhook URL structure:
+`https://your-n8n-instance.cloud/webhook/support`
+
+---
+
+## 📄 License
+
+This project is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
