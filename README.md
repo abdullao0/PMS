@@ -49,14 +49,13 @@ Whether you're managing a single shop or tracking a diverse product catalog acro
 
 ### Frontend
 - **Engine**: Blade Templates
-- **Styling**: [Tailwind CSS 4.0](https://tailwindcss.com)
-- **Interactivity**: Axios for API calls, SweetAlert2 for beautiful notifications.
-- **Asset Bundling**: Vite
+- **Styling**: CSS
+- **Interactivity**: SweetAlert2 for beautiful notifications.
 
 ### Orchestration & Tools
 - **Automation**: [n8n](https://n8n.io) (Low-code workflow automation)
-- **Deployment**: Laravel Vite Plugin
-- **Task Runner**: Composer & NPM
+- **Deployment**: Laravel
+- **Task Runner**: Composer 
 
 ---
 
