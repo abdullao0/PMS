@@ -67,7 +67,6 @@ Follow these steps to get your project up and running locally.
 ### Prerequisites
 - PHP 8.2+
 - Composer
-- Node.js & NPM
 
 ### Setup Instructions
 
@@ -80,7 +79,6 @@ Follow these steps to get your project up and running locally.
 2. **Install Dependencies**:
    ```bash
    composer install
-   npm install
    ```
 
 3. **Environment Configuration**:
@@ -94,16 +92,12 @@ Follow these steps to get your project up and running locally.
    php artisan migrate
    ```
 
-5. **Build Assets**:
-   ```bash
-   npm run build
-   ```
 
-6. **Start the Development Server**:
+5. **Start the Development Server**:
    ```bash
    composer dev
    ```
-   *Note: This runs Laravel, Vite, and Queue listeners simultaneously.*
+   *Note: This runs Laravel, and Queue listeners simultaneously.*
 
 ---
 
